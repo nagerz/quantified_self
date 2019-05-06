@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "jest --watch"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -17,7 +18,10 @@
     "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {
+    "babel-jest": "^24.8.0",
     "nodemon": "^1.19.0",
-    "pryjs": "^1.0.3"
+    "pryjs": "^1.0.3",
+    "shelljs": "^0.8.3",
+    "supertest": "^4.0.2"
   }
 }
