@@ -23,16 +23,16 @@ describe('Food show api', () => {
 
     test('it should return a food object', () => {
       return request(app).get("/api/v1/foods/1").then(response => {
-        expect(Object.keys(response.body[0].id)).toBe(1),
-        expect(Object.keys(response.body[0].name)).toBe('Cheetos'),
-        expect(Object.keys(response.body[0].calories)).toBe(30)
+        expect(response.body.id).toBe(1),
+        expect(response.body.name).toBe('Cheetos'),
+        expect(response.body.calories).toBe(30)
       });
     });
 
     test('it should return a 404 status when unsuccessful', () => {
       return request(app).get("/api/v1/foods/4").then(response => {
         expect(response.status).toBe(404)
-        expect(response.body).toBe({ error: "Requested food item could not be found." })
+        expect(response.body.error).toBe("Requested food item could not be found.")
       });
     });
   });
