@@ -19,7 +19,6 @@ router.get("/", function(req, res, next) {
 
 router.get("/:id", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-
   Food.findOne({
     where: {
       id: req.params.id
@@ -35,6 +34,25 @@ router.get("/:id", function(req, res, next) {
   .catch(error => {
     res.status(500).send({error})
   });
+});
+
+router.patch("/:id", function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+  if(req.body.food && req.body.food.name && req.body.food.calories){
+    Food.update(req.params.id, req.body)
+    .then(food => {
+      if(!food){
+        res.status(404).send({ error: "Requested food item could not be found." });
+      }else{
+        res.status(200).send(JSON.stringify(food));
+      }
+    })
+    .catch(error => {
+      res.status(500).send({error})
+    });
+  }else{
+    res.status(404).send({ error: "Request formatted incorrectly and/or missing information." });
+  }
 });
 
 module.exports = router;
