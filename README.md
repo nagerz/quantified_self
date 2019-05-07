@@ -53,6 +53,7 @@ To view Quantified Self in development, execute the following command from the p
 * scriptjs
 * shelljs
 * supertest
+------>>>>>>>> add more tools (APIs used)
 
 ## Known Issues
 ------------>>>>>>>>>>> Add here
