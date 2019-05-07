@@ -36,4 +36,12 @@ describe('Food api', () => {
       });
     });
   });
+
+  describe('Test POST /api/v1/foods path', () => {
+    test('it should return the successfully created food', () => {
+      return request(app).post("/api/v1/foods").then(response => {
+        expect(response.statusCode).toBe(200)
+      })
+    })
+  })
 });
