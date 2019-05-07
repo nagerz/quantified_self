@@ -17,9 +17,11 @@ To run Quantified Self on a local machine, navigate to the directory in which yo
 ```
 $ git clone git@github.com:nagerz/quantified_self.git
 $ cd quantified_self
-$ npm install
+$ npm install # Install dependencies
+$ npx sequelize db:create # Create PostgreSQL Database
+$ npx sequelize db:migrate # Run migrations for database setup
+$ npx sequelize db:seed:all # Run seed file for seeding database
 ```
-------------->>>>>>>>>>> Add something about the database username in the config/config.json
 
 #### Environment Variable Setup:
 
@@ -41,7 +43,97 @@ To view Quantified Self in development, execute the following command from the p
 
 
 ## Available Endpoints
--------->>>>>>>>> Add here
+The application provides the following endpoints:
+
+#### Food Endpoints
+###### Food Index
+
+All food items currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods` endpoint. 
+
+If the request is successful, the application will return an array containing food item objects, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+[
+  {
+    "id": 1,
+    "name": "food name",
+    "calories": 10
+  },
+  {}...
+]
+```
+###### Food Show
+
+An individual food item currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint. 
+
+If the request is successful, the application will return the requested food object, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+{
+  "id": 1,
+  "name": "food name",
+  "calories": 10
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
+
+``` HTTP
+status: 400
+body:
+
+{
+  "error": "Requested food item could not be found."
+}
+```
+
+###### Food Creation
+
+A new food item can be created and saved in the databse via a `POST` request to the `/api/v1/foods` endpoint. The request must contain a food name (unique in the system) and the number of colories associated with the food matching the format provided below.
+
+``` HTTP
+POST /api/v1/foods
+Content-Type: application/json
+Accept: application/json
+
+{
+  "food":
+    {
+      "name": "food name here",
+      "calories": "number of calories here"
+    }
+}
+```
+
+If the request is successful, the application will return the created food object in the format below, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+{
+  "id": 1,
+  "name": "food name",
+  "calories": 10
+}
+```
+
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
+
+``` HTTP
+status: 400
+body:
+
+{
+  "error": "name must be unique"
+}
+```
 
 ## Tools
 * Postman
