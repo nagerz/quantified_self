@@ -1,1 +1,85 @@
-# quantified_self
+# README
+
+## Description
+Quantified Self is a 10-day, paired project during module four of four, of Turing School's Back-End Engineering Program.
+
+Quantified Self is a web application designed to consume/produce API's. The application utilizes Node.js, Expess and Sequelize, with a PostgreSQL database, to consume the  --------->>>>>>>>>> Add here.
+
+#### [**_View Quantified Self in Production_**](https://self-quantified.herokuapp.com/) </br>
+
+### Schema
+<!-- ![Alt text](./public/images/schema.png?raw=true "Database Schema") -->
+
+## Getting Started
+
+To run Quantified Self on a local machine, navigate to the directory in which you would like the project to be located in, then execute the following commands:
+
+```
+$ git clone git@github.com:nagerz/quantified_self.git
+$ cd quantified_self
+$ npm install
+```
+------------->>>>>>>>>>> Add something about the database username in the config/config.json
+
+#### Environment Variable Setup:
+
+ Sign Up for the following APIs:
+* [Site](link) <<<<<<<-------- Add things here
+
+Create a `.env` file in the root directory of the project. Add `.env` to the `.gitignore` file. Make sure to insert the secret key without the alligator clips ( < > ).
+```
+---------->>>>>>>>>>Add environment variables here.
+```
+
+## Running Tests
+
+To run the test suite, execute the following command: `npm test`. The tests will automatically run each time an update is made to the application.
+
+## Deployment
+
+To view Quantified Self in development, execute the following command from the project directory: `nodemon npm start`. To view the application in a web browser, visit `localhost:3000` and navigate the the desired endpoint.
+
+
+## Available Endpoints
+-------->>>>>>>>> Add here
+
+## Tools
+* Postman
+* dotenv
+* node-fetch
+* pryjs
+* babel-jest
+* nodemon
+* scriptjs
+* shelljs
+* supertest
+------>>>>>>>> add more tools (APIs used)
+
+## Known Issues
+------------>>>>>>>>>>> Add here
+
+## How to Contribute
+
+###### Contributing Code:
+1. Fork the project.
+2. Write a failing test.
+3. Commit that failing tests.
+4. Commit changes that fix the tests.
+4. Submit a pull request detailing the change that was made.
+
+###### Submitting a Bug:
+1. Search the existing [issues](https://github.com/nagerz/quantified_self/issues).
+2. Create a new issue if applicable, or contribute to an existing issue.
+
+### Related Links:
+###### * [**_Agile Project Board_**](https://github.com/nagerz/quantified_self/projects/1)
+###### * [**_Project Specifications_**](http://backend.turing.io/module4/projects/quantified_self/qs_server_side)
+###### * [**_Project Rubric_**](http://backend.turing.io/module4/projects/quantified_self/rubric)
+
+### Author
+[Mackenzie Frey](https://github.com/Mackenzie-Frey)
+[Zach Nager](https://github.com/nagerz)
+
+### Special Recognition
+* [Dione Wilson](https://github.com/dionew1)
+* [Cory Westerfield](https://github.com/corywest)
