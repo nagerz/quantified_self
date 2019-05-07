@@ -5,6 +5,7 @@ var pry = require('pryjs');
 const fetch = require('node-fetch');
 
 router.get("/", function(req, res, next) {
+  eval(pry.it)
   Food.findAll()
     .then(foods => {
       res.setHeader("Content-Type", "application/json");
@@ -19,11 +20,11 @@ router.get("/", function(req, res, next) {
 router.post("/", async (req, res, next) => {
   try {
     eval(pry.it)
-    const food = Food.findOrCreate({name: req.query.food.name, calories: req.query.food.calories})
+    const food =  await Food.findOrCreate({where: {name: req.body.name, calories: req.body.calories} })
     if (!food) {
       res.status(400).send({ error })
     } else {
-      res.status(200).send(food)
+      res.status(200).send(JSON.stringify(food))
     }
   }
   catch {
