@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return Promise.all ([
-      queryInterface.bulkInsert('Foods', [
+      queryInterface.bulkInsert('Food', [
           {
             id: 1,
             name: 'Cheetos',
@@ -31,7 +31,7 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return Promise.all ([
-      queryInterface.bulkDelete('Foods', null, {})
+      queryInterface.bulkDelete('Food', null, {})
     ])
   }
 };
