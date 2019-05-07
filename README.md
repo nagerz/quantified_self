@@ -62,7 +62,7 @@ body:
     "name": "food name",
     "calories": 10
   },
-  {}...
+  {...}
 ]
 ```
 ###### Food Show
