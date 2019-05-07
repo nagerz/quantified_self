@@ -82,7 +82,7 @@ body:
 }
 ```
 
-In the event that the request is unsuccessful, the application will return an error message, along with a status code of 404.
+In the event that the request is unsuccessful, the application will return an error message, along with a status code of 400.
 
 ``` HTTP
 status: 400
