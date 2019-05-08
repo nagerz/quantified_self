@@ -9,13 +9,12 @@ describe('Food update api', () => {
     shell.exec('npx sequelize db:create')
   });
   beforeEach(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
-
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
   });
   afterEach(() => {
     shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   describe('Test PATCH /api/v1/foods/:id path', () => {
@@ -43,15 +42,11 @@ describe('Food update api', () => {
                       }
                     }
 
-      const expected = {
-                        "id": 1,
-                        "name": "Mint",
-                        "calories": 14
-                      }
-
       await request(app).patch("/api/v1/foods/1").send(body)
       .then(async response => {
-        await expect(response.body).toBe(expected)
+        await expect(response.body.id).toBe(1)
+        await expect(response.body.name).toBe("Mint")
+        await expect(response.body.calories).toBe(14)
       });
     });
 

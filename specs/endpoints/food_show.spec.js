@@ -7,12 +7,12 @@ describe('Food show api', () => {
     shell.exec('npx sequelize db:create')
   });
   beforeEach(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
   });
   afterEach(() => {
     shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   describe('Test GET /api/v1/foods/:id path', () => {

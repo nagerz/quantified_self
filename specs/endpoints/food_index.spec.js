@@ -12,6 +12,7 @@ describe('Food index api', () => {
     });
   afterEach(() => {
     shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   describe('Test GET /api/v1/foods path', () => {
