@@ -22,7 +22,6 @@ describe('Food create API', () => {
       }
       return request(app).post("/api/v1/foods").send(newFood)
         .then(response => {
-          console.log({response})
           expect(response.status).toBe(200),
             expect(response.body).toHaveProperty("id"),
             expect(response.body.name).toBe("Pringles"),
