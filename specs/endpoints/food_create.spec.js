@@ -71,8 +71,7 @@ describe('Food create API', () => {
       }
       return request(app).post("/api/v1/foods").send(newFood)
       .then(response => {
-        expect(response.status).toBe(400),
-        expect(response.body).toBe(undefined)
+        expect(response.status).toBe(400)
       })
     })
 
@@ -82,11 +81,8 @@ describe('Food create API', () => {
       }
       return request(app).post("/api/v1/foods").send(newFood)
       .then(response => {
-        expect(response.status).toBe(400),
-        expect(response.body).toBe(undefined)
+        expect(response.status).toBe(400)
       })
     })
   })
 })
-
-// Next step is to change the test structure to model the other tests zach made.
