@@ -47,7 +47,8 @@ describe('Food create API', () => {
       return request(app).post("/api/v1/foods").send(newFood)
       .then(response => {
         expect(response.status).toBe(200),
-        expect(response.body.id).toBe(1),
+        // expect(response.body.id).toBeInstanceOf(Integer),
+        expect(response.body).toHaveProperty("id"),
         expect(response.body.name).toBe("Pringles"),
         expect(response.body.calories).toBe(27)
       })
