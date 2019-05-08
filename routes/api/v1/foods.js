@@ -54,12 +54,11 @@ router.post("/", function(req, res, next) {
     })
     .spread((food, created) => {
       if (created) {
-        res.status(200).send(JSON.stringify(food))
+        res.status(200).send(JSON.stringify(parsedFood(food)))
       }else{
         res.status(400).send({error:"Food already exists."})
       }
     })
-
     .catch(error => {
       if (error.message.includes("WHERE parameter")) {
         res.status(400).send(JSON.stringify(calOrNameErrorMessage))
