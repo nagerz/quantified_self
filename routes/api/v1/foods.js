@@ -45,12 +45,10 @@ router.post("/", function(req, res, next) {
   if (req.body.name === undefined) {
     res.status(400).send(JSON.stringify(calOrNameErrorMessage))
   } else {
-    const name = upCase(req.body.name)
+    const name = downCase(req.body.name)
     Food.findOrCreate({
-        where: {
-          name: name,
-          calories: req.body.calories
-        }
+        where: {name: name},
+        defaults: {calories: req.body.calories}
       })
       .then(food => {
         if (!food) {
@@ -83,8 +81,8 @@ function parsedFood(food) {
   }
 }
 
-function upCase(name) {
-  return name.charAt(0).toUpperCase() + name.slice(1)
+function downCase(name) {
+  return name.toLowerCase()
 }
 
 module.exports = router;
