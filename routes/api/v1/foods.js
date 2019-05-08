@@ -1,13 +1,10 @@
 var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
-
-var pry = require('pryjs');
 const fetch = require('node-fetch');
 
 router.get("/", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-
   Food.findAll({
     attributes: ['id', 'name', 'calories']
   })
@@ -81,6 +78,17 @@ function validateRequest(req) {
       reject(error)
     }
   })
+
+function parsedFood(food) {
+  return {
+    "id": food.id,
+    "name": food.name,
+    "calories": food.calories
+  }
+}
+
+function upCase(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1)
 }
 
 module.exports = router;
