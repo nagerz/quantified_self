@@ -2,7 +2,6 @@ var shell = require('shelljs');
 var request = require("supertest");
 var app = require('../../app');
 var Food = require('../../models').Food;
-var pry = require('pryjs');
 
 describe('Food Model test', () => {
   beforeAll(() => {

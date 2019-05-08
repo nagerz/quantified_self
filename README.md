@@ -48,7 +48,7 @@ The application provides the following endpoints:
 #### Food Endpoints
 ###### Food Index
 
-All food items currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods` endpoint. 
+All food items currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods` endpoint.
 
 If the request is successful, the application will return an array containing food item objects, along with a status code of 200.
 
@@ -67,7 +67,7 @@ body:
 ```
 ###### Food Show
 
-An individual food item currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint. 
+An individual food item currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
 
 If the request is successful, the application will return the requested food object, along with a status code of 200.
 
@@ -95,7 +95,7 @@ body:
 
 ###### Food Creation
 
-A new food item can be created and saved in the databse via a `POST` request to the `/api/v1/foods` endpoint. The request must contain a food name (unique in the system) and the number of colories associated with the food matching the format provided below.
+A new food item can be created and saved in the database via a `POST` request to the `/api/v1/foods` endpoint. The request must contain a food name (unique in the system) and the number of calories associated with the food matching the format provided below.
 
 ``` HTTP
 POST /api/v1/foods
@@ -103,11 +103,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "food":
-    {
-      "name": "food name here",
-      "calories": "number of calories here"
-    }
+  "name": "food name here",
+  "calories": "number of calories here"
 }
 ```
 
@@ -130,9 +127,16 @@ In the event that the request is unsuccessful, the application will return an er
 status: 400
 body:
 
-{
-  "error": "name must be unique"
-}
+"Name/Calories must be passed in to the body via x-www-form-urlencoded in the format of name or calories as the key and item name or calories count as the value without quotes"
+```
+
+In the event that the request is unsuccessful due to an incompatible calorie datatype of string, the application will return an error message, along with a status code of 400.
+
+``` HTTP
+status: 400
+body:
+
+"Please pass the calories datatype as a Number"
 ```
 
 ## Tools
