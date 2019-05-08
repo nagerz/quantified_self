@@ -21,20 +21,35 @@ describe('Food create API', () => {
     shell.exec('npx sequelize db:seed:undo:all')
   });
 
+  // describe('Test POST /api/v1/foods path' , () => {
+  //   test('it should create a food', async() => {
+  //     const newFood =  {
+  //       name: "Pringles",
+  //       calories: 27
+  //      }
+  //      try {
+  //        const response = await request(app).post('/api/v1/service/foods').send(newFood)
+  //        expect(response.statusCode).toBe(20)
+  //      } catch (err) {
+  //        // write some test here
+  //        expect(response.statusCode).toBe(500)
+  //      }
+  //     }
+  //   })
+  // })
   describe('Test POST /api/v1/foods path' , () => {
-    test('Create a food', async() => {
+    test('it should create a food successfully', () => {
       const newFood =  {
         name: "Pringles",
         calories: 27
-       }
-       try {
-         const response = await request(app).post('/api/v1/service/foods').send(newFood)
-         expect(response.statusCode).toBe(20)
-       } catch (err) {
-         // write some test here
-         expect(response.statusCode).toBe(500)
-       }
       }
+      return request(app).post("/api/v1/foods").then(response => {
+        expect(response.status).toBe(20)
+      })
     })
+
+    
   })
 })
+
+// Next step is to change the test structure to model the other tests zach made.
