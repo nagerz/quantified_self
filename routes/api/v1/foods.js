@@ -78,6 +78,7 @@ function validateRequest(req) {
       reject(error)
     }
   })
+}
 
 function parsedFood(food) {
   return {
