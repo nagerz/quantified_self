@@ -42,10 +42,9 @@ router.get("/:id", function(req, res, next) {
 
 router.post("/", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
+  const calOrNameErrorMessage = "Name/Calories must be passed in to the body via x-www-form-urlencoded in the format of name or calories as the key and item name or calories count as the value without quotes"
   if (req.body.name === undefined) {
-    res.status(400).send({
-      error
-    })
+    res.status(400).send(JSON.stringify(calOrNameErrorMessage))
   } else {
     const name = upCase(req.body.name)
     Food.findOrCreate({
@@ -65,9 +64,9 @@ router.post("/", function(req, res, next) {
       })
       .catch(error => {
         if (error.message.includes("WHERE parameter")) {
-          res.status(400).send({
-            error
-          })
+          res.status(400).send(JSON.stringify(calOrNameErrorMessage))
+        } else if (typeof(req.body.calories) === "string") {
+          res.status(400).send(JSON.stringify("Please pass the calories datatype as a Number"))
         } else {
           res.status(500).send({
             error
