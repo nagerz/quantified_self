@@ -67,9 +67,7 @@ router.post("/", function(req, res, next) {
         } else if (typeof(req.body.calories) === "string") {
           res.status(400).send(JSON.stringify("Please pass the calories datatype as a Number"))
         } else {
-          res.status(500).send({
-            error
-          })
+          res.status(500).send()
         }
       })
   }
@@ -86,5 +84,16 @@ function parsedFood(food) {
 function upCase(name) {
   return name.charAt(0).toUpperCase() + name.slice(1)
 }
+
+router.delete('/', function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+
+  try {
+    res.status(204).send()
+  }
+  catch(error) {
+    res.status(500).send({ error })
+  }
+})
 
 module.exports = router;
