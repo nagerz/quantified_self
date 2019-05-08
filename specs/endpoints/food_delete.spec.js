@@ -1,6 +1,7 @@
 var shell = require('shelljs');
 var request = require("supertest");
 var app = require('../../app');
+var Food = require('../../models').Food;
 
 describe('Food delete API', () => {
   beforeAll(() => {
@@ -44,7 +45,6 @@ describe('Food delete API', () => {
           expect(Food.findAll({where: { id: 83 }}).id).toBe(83)
         })
     })
-  })
 
     test('it should return 404 if id not in url', () => {
       return request(app).delete('/api/v1/foods')
@@ -52,6 +52,5 @@ describe('Food delete API', () => {
           expect(response.status).toBe(404)
         })
     })
-
   })
 })
