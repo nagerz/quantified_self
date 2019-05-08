@@ -19,7 +19,7 @@ router.get("/", async function(req, res, next) {
 
 router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-  Food.findOne({
+  return Food.findOne({
     where: {
       id: req.params.id
     }

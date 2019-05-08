@@ -3,7 +3,6 @@ var request = require("supertest");
 var app = require('../../app');
 var Food = require('../../models').Food;
 
-
 describe('Food update api', () => {
   beforeAll(() => {
     shell.exec('npx sequelize db:create')
@@ -93,13 +92,13 @@ describe('Food update api', () => {
                         }
                       }
 
-        await request(app).patch("/api/v1/foods/5").send(body)
+        await request(app).patch("/api/v1/foods/4").send(body)
         .then(async response => {
           await expect(response.status).toBe(404)
         })
       });
 
-      test('if name already exists', async () => {
+      test('if name already exists', () => {
         const body = {
                       "food":
                         {
@@ -108,10 +107,10 @@ describe('Food update api', () => {
                         }
                       }
 
-        await request(app).patch("/api/v1/foods/1").send(body)
-        .then(async response => {
-          await expect(response.status).toBe(404)
-          await expect(response.body.error).toBe("name must be unique")
+        return request(app).patch("/api/v1/foods/1").send(body)
+        .then(response => {
+          expect(response.status).toBe(404)
+          expect(response.body.error).toBe("name must be unique")
         })
       });
 
