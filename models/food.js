@@ -10,21 +10,24 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   };
 
-  Food.update = function(id, reqBody) {
+  Food.update = function(req) {
     return new Promise((resolve, reject) => {
       Food.findOne({
         where: {
-          id: id
+          id: req.params.id
         }
       })
       .then(food => {
         if (food) {
           food.update({
-            name: reqBody.food.name,
-            calories: reqBody.food.calories
+            name: req.body.food.name,
+            calories: req.body.food.calories
           })
           .then(food => {
             food ? resolve(food) : resolve(null)
+          })
+          .catch(error => {
+            resolve({error})
           })
         } else {
           resolve(null)

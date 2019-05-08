@@ -39,10 +39,12 @@ router.get("/:id", async function(req, res, next) {
 router.patch("/:id", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   if(req.body.food && req.body.food.name && req.body.food.calories){
-    Food.update(req.params.id, req.body)
+    Food.update(req)
     .then(food => {
       if(!food){
         res.status(404).send({ error: "Requested food item could not be found." });
+      }else if(food.error){
+        res.status(404).send({ error: food.error.errors[0].message});
       }else{
         res.status(200).send(JSON.stringify(food));
       }
@@ -51,7 +53,7 @@ router.patch("/:id", function(req, res, next) {
       res.status(500).send({error})
     });
   }else{
-    res.status(404).send({ error: "Request formatted incorrectly and/or missing information." });
+    res.status(400).send({ error: "Request formatted incorrectly and/or missing information." });
   }
 });
 
