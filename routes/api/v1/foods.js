@@ -45,7 +45,12 @@ router.post("/", function(req, res, next) {
     }
   })
   .catch(error => {
-    res.status(500).send({ error })
+    if (error.message.includes("WHERE parameter")) {
+      res.status(400).send({ error })
+      eval(pry.it)
+    } else {
+      res.status(500).send({ error })
+    }
   })
 })
 
@@ -54,8 +59,6 @@ function parsedFood(food) {
     "name": food.name,
     "calories": food.calories}
 }
-
-
 
 
 // router.post("/", async (req, res, next) => {
