@@ -30,6 +30,7 @@ describe('Food create API', () => {
   //      try {
   //        const response = await request(app).post('/api/v1/service/foods').send(newFood)
   //        expect(response.statusCode).toBe(20)
+  // Try it with await in front of expect
   //      } catch (err) {
   //        // write some test here
   //        expect(response.statusCode).toBe(500)
@@ -43,12 +44,48 @@ describe('Food create API', () => {
         name: "Pringles",
         calories: 27
       }
-      return request(app).post("/api/v1/foods").then(response => {
-        expect(response.status).toBe(20)
+      return request(app).post("/api/v1/foods").send(newFood)
+      .then(response => {
+        expect(response.status).toBe(200),
+        expect(response.body.id).toBe(1),
+        expect(response.body.name).toBe("Pringles"),
+        expect(response.body.calories).toBe(27)
+      })
+
+      const newFoodPringlesNotCapitalized =  {
+        name: "pringles",
+        calories: 27
+      }
+      return request(app).post("/api/v1/foods").send(newFood)
+      .then(response => {
+        expect(response.status).toBe(200),
+        expect(response.body.id).toBe(1),
+        expect(response.body.name).toBe("Pringles"),
+        expect(response.body.calories).toBe(27)
       })
     })
 
-    
+    test('it should not create a food if unsuccessful due to missing name', () => {
+      const newFood =  {
+        calories: 27
+      }
+      return request(app).post("/api/v1/foods").send(newFood)
+      .then(response => {
+        expect(response.status).toBe(400),
+        expect(response.body).toBe(undefined)
+      })
+    })
+
+    test('it should not create a food if unsuccessful due to missing calories', () => {
+      const newFood =  {
+        name: "Pringles"
+      }
+      return request(app).post("/api/v1/foods").send(newFood)
+      .then(response => {
+        expect(response.status).toBe(400),
+        expect(response.body).toBe(undefined)
+      })
+    })
   })
 })
 
