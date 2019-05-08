@@ -61,5 +61,15 @@ describe('Food create API', () => {
           expect(response.status).toBe(400)
         })
     })
+
+    test('it should not create a food if unsuccessful due to incorrect datatype for calorie', () => {
+      const newFood = {
+        calories: "27"
+      }
+      return request(app).post("/api/v1/foods").send(newFood)
+        .then(response => {
+          expect(response.status).toBe(400)
+        })
+    })
   })
 })
