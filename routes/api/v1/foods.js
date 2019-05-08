@@ -36,28 +36,37 @@ router.get("/:id", function(req, res, next) {
 
 router.post("/", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-  Food.findOrCreate({where: {name: req.body.name, calories: req.body.calories} })
-  .then(food => {
-    if (!food){
-      res.status(400).send({ error })
-    } else {
-      res.status(200).send(JSON.stringify(parsedFood(food[0])))
-    }
-  })
-  .catch(error => {
-    if (error.message.includes("WHERE parameter")) {
-      res.status(400).send({ error })
-      eval(pry.it)
-    } else {
-      res.status(500).send({ error })
-    }
-  })
+  if (req.body.name === undefined) {
+    res.status(400).send({ error })
+  } else {
+    const name = upCase(req.body.name)
+    Food.findOrCreate({where: {name: name, calories: req.body.calories} })
+    .then(food => {
+      if (!food){
+        res.status(400).send({ error })
+      } else {
+        res.status(200).send(JSON.stringify(parsedFood(food[0])))
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      if (error.message.includes("WHERE parameter")) {
+        res.status(400).send({ error })
+      } else {
+        res.status(500).send({ error })
+      }
+    })
+  }
 })
 
 function parsedFood(food) {
     return {"id": food.id,
     "name": food.name,
     "calories": food.calories}
+}
+
+function upCase(name) {
+  return name.charAt(0).toUpperCase() + name.slice(1)
 }
 
 
