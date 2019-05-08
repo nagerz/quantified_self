@@ -1,5 +1,4 @@
 'use strict';
-var pry = require('pryjs');
 
 module.exports = (sequelize, DataTypes) => {
   const Food = sequelize.define('Food', {
