@@ -5,7 +5,7 @@ var Food = require('../../../models').Food;
 var pry = require('pryjs');
 const fetch = require('node-fetch');
 
-router.get("/", function(req, res, next) {
+router.get("/", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
 
   Food.findAll()
@@ -17,7 +17,7 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.get("/:id", function(req, res, next) {
+router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   Food.findOne({
     where: {
