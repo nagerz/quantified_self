@@ -7,7 +7,6 @@ const fetch = require('node-fetch');
 
 router.get("/", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-
   Food.findAll({
     attributes: ['id', 'name', 'calories']
   })
@@ -21,7 +20,7 @@ router.get("/", async function(req, res, next) {
 
 router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
-  return Food.findOne({
+  Food.findOne({
     where: {
       id: req.params.id
     },
@@ -35,11 +34,11 @@ router.get("/:id", async function(req, res, next) {
     }
   })
   .catch(error => {
-    res.status(500).send({error})
+    res.status(404).send({error})
   });
 });
 
-router.patch("/:id", function(req, res, next) {
+router.patch("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   validateRequest(req)
   .then(req => {
