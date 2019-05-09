@@ -5,78 +5,88 @@ var Food = require('../../models').Food;
 
 describe('Food update API', () => {
   describe('Test PATCH /api/v1/foods/:id path', () => {
-    beforeEach(() => {
-      specHelper.testSetup()
-    });
-    afterEach(() => {
-      specHelper.tearDown()
-    });
-    test('it should return a 200 status', () => {
-      const body = {
-                    "food":
-                      {
-                        "name": "test name",
-                        "calories": 14
-                      }
-                    }
-
-      return request(app).patch("/api/v1/foods/1").send(body)
-      .then(response => {
-        expect(response.status).toBe(200)
-      })
-    });
-
-    test('it should return a food object', () => {
-      const body = {
-                    "food":
-                      {
-                        "name": "test name",
-                        "calories": 14
-                      }
-                    }
-
-      return request(app).patch("/api/v1/foods/1").send(body)
-      .then(response => {
-        expect(response.body.id).toBe(1)
-        expect(response.body.name).toBe("test name")
-        expect(response.body.calories).toBe(14)
+    describe('with a valid request', () => {
+      beforeEach(() => {
+        specHelper.testSetup()
       });
-    });
-
-    test.skip('it should update food item in database', async () => {
-      await Food.findOne({
-        where:{id: 1}
-      })
-      .then(food => {
-        expect(food.id).toBe(1)
-        expect(food.name).toBe("cheetos")
-        expect(food.calories).toBe(30)
+      afterEach(() => {
+        specHelper.tearDown()
       });
 
-      const body = {
-                    "food":
-                      {
-                        "name": "mint",
-                        "calories": 14
+      test('it should return a 200 status', () => {
+        const body = {
+                      "food":
+                        {
+                          "name": "test name",
+                          "calories": 14
+                        }
                       }
-                    }
 
-      await request(app).patch("/api/v1/foods/1").send(body)
-      .then(response => {
-        expect(response.status).toBe(200)
+        return request(app).patch("/api/v1/foods/1").send(body)
+        .then(response => {
+          expect(response.status).toBe(200)
+        })
       });
 
-      await Food.findOne({
-        where:{id: 1}
-      })
-      .then(food => {
-        expect(food.id).toBe(1)
-        expect(food.name).toBe("mint")
-        expect(food.calories).toBe(14)
+      test('it should return a food object', () => {
+        const body = {
+                      "food":
+                        {
+                          "name": "test name",
+                          "calories": 14
+                        }
+                      }
+
+        return request(app).patch("/api/v1/foods/1").send(body)
+        .then(response => {
+          expect(response.body.id).toBe(1)
+          expect(response.body.name).toBe("test name")
+          expect(response.body.calories).toBe(14)
+        })
+      });
+
+      test.skip('it should update food item in database', async () => {
+        await Food.findOne({
+          where:{id: 1}
+        })
+        .then(food => {
+          expect(food.id).toBe(1)
+          expect(food.name).toBe("cheetos")
+          expect(food.calories).toBe(30)
+        });
+
+        const body = {
+                      "food":
+                        {
+                          "name": "mint",
+                          "calories": 14
+                        }
+                      }
+
+        await request(app).patch("/api/v1/foods/1").send(body)
+        .then(response => {
+          expect(response.status).toBe(200)
+        });
+
+        await Food.findOne({
+          where:{id: 1}
+        })
+        .then(food => {
+          expect(food.id).toBe(1)
+          expect(food.name).toBe("mint")
+          expect(food.calories).toBe(14)
+        });
       });
     });
 
     describe('it should return a 400 status when unsuccessful', () => {
+      beforeEach(() => {
+        specHelper.testSetup()
+      });
+      afterEach(() => {
+        specHelper.tearDown()
+      });
+
       test.skip('if invalid Id', () => {
         const body = {
                       "food":
