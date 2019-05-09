@@ -98,23 +98,23 @@ router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
           })
           .spread((mealfood, created) => {
             if (created) {
-              res.status(200).send(JSON.stringify({"message": `Successfully added ${food.name} to ${meal.name}`}))
+              res.status(201).send(JSON.stringify({"message": `Successfully added ${food.name} to ${meal.name}`}))
             }else{
               res.status(400).send({error:"That food already exists for that meal."})
             }
           })
           .catch(error => {
-            res.status(404).send({ error: error });
+            res.status(400).send({ error: error });
           })
         }
       })
       .catch(error => {
-        res.status(404).send({ error: "Invalid request." });
+        res.status(400).send({ error: "Invalid request." });
       })
     }
   })
   .catch(error => {
-    res.status(404).send({ error: "Invalid request." });
+    res.status(400).send({ error: "Invalid request." });
   })
 })
 
