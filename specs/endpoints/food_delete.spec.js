@@ -1,18 +1,14 @@
-var shell = require('shelljs');
+var specHelper = require('../spec_helper');
 var request = require("supertest");
 var app = require('../../app');
 var Food = require('../../models').Food;
 
 describe('Food delete API', () => {
-  beforeAll(() => {
-    shell.exec('npx sequelize db:create')
-  });
   beforeEach(() => {
-    shell.exec('npx sequelize db:migrate')
-    shell.exec('npx sequelize db:seed:all')
+    specHelper.testSetup()
   });
   afterEach(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
+    specHelper.tearDown()
   });
 
   describe('', () => {

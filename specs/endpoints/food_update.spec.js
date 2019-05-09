@@ -1,27 +1,21 @@
-var shell = require('shelljs');
+var specHelper = require('../spec_helper');
 var request = require("supertest");
 var app = require('../../app');
 var Food = require('../../models').Food;
 
-describe('Food update api', () => {
-  beforeAll(() => {
-    shell.exec('npx sequelize db:create')
-  });
-  beforeEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
-    shell.exec('npx sequelize db:seed:undo:all')
-    shell.exec('npx sequelize db:migrate')
-    shell.exec('npx sequelize db:seed:all')
-  });
-  afterEach(() => {
-  });
-
+describe('Food update API', () => {
   describe('Test PATCH /api/v1/foods/:id path', () => {
+    beforeEach(() => {
+      specHelper.testSetup()
+    });
+    afterEach(() => {
+      specHelper.tearDown()
+    });
     test('it should return a 200 status', () => {
       const body = {
                     "food":
                       {
-                        "name": "mint",
+                        "name": "test name",
                         "calories": 14
                       }
                     }
@@ -36,7 +30,7 @@ describe('Food update api', () => {
       const body = {
                     "food":
                       {
-                        "name": "mint",
+                        "name": "test name",
                         "calories": 14
                       }
                     }
@@ -44,7 +38,7 @@ describe('Food update api', () => {
       return request(app).patch("/api/v1/foods/1").send(body)
       .then(response => {
         expect(response.body.id).toBe(1)
-        expect(response.body.name).toBe("mint")
+        expect(response.body.name).toBe("test name")
         expect(response.body.calories).toBe(14)
       });
     });
