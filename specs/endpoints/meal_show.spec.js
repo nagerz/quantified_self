@@ -22,7 +22,7 @@ describe('Meal show API', () => {
       return request(app).get("/api/v1/meals/1/foods").then(response => {
         expect(response.body.id).toBe(1),
         expect(response.body.name).toBe('Breakfast'),
-        expect(response.body.food[0].name).toBe("cheetos")
+        expect(response.body.Food[0].name).toBe("cheetos")
       });
     });
 
