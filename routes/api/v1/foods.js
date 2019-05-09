@@ -81,8 +81,7 @@ router.delete('/:id', async (req, res, next) => {
     if (!food) {
       res.status(404).send()
     } else {
-      // Delete food from database
-      
+      await food.destroy()
       res.status(204).send()
     }
   }
