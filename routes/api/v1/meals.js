@@ -38,15 +38,15 @@ router.get("/:id/foods", async function(req, res, next) {
 router.get("/", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
   Meal.findAll({
-    attributes: ['id', 'name'],
-    include: [{
-      model: Food,
-      attributes: ['id', 'name', 'calories'],
-      through: {
-        attributes: []
-      }
-    }]
-  })
+      attributes: ['id', 'name'],
+      include: [{
+        model: Food,
+        attributes: ['id', 'name', 'calories'],
+        through: {
+          attributes: []
+        }
+      }]
+    })
     .then(meals => {
       if (!meals) {
         res.status(404).send({
