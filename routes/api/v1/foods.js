@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
 const fetch = require('node-fetch');
-var pry = require('pryjs');
 
 router.get("/", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
