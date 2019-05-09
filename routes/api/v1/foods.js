@@ -77,16 +77,25 @@ router.post("/", function(req, res, next) {
 router.delete('/:id', async (req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   try {
-    const food = await Food.findOne({where: {id: req.url.slice(1)}})
+    eval(pry.it)
+    const food = await Food.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
     if (!food) {
-      res.status(404).send()
+      const message = {
+        "error": "The requested food item could not be found and was therefore not deleted."
+      }
+      res.status(404).send(JSON.stringify(message))
     } else {
       await food.destroy()
       res.status(204).send()
     }
-  }
-  catch(error) {
-    res.status(500).send({ error })
+  } catch (error) {
+    res.status(500).send({
+      error
+    })
   }
 })
 
