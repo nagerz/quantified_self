@@ -8,11 +8,12 @@ describe('Food update api', () => {
     shell.exec('npx sequelize db:create')
   });
   beforeEach(() => {
+    shell.exec('npx sequelize db:migrate:undo:all')
+    shell.exec('npx sequelize db:seed:undo:all')
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
   });
   afterEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   describe('Test PATCH /api/v1/foods/:id path', () => {
@@ -20,7 +21,7 @@ describe('Food update api', () => {
       const body = {
                     "food":
                       {
-                        "name": "Mint",
+                        "name": "mint",
                         "calories": 14
                       }
                     }
@@ -35,7 +36,7 @@ describe('Food update api', () => {
       const body = {
                     "food":
                       {
-                        "name": "Mint",
+                        "name": "mint",
                         "calories": 14
                       }
                     }
@@ -43,7 +44,7 @@ describe('Food update api', () => {
       return request(app).patch("/api/v1/foods/1").send(body)
       .then(response => {
         expect(response.body.id).toBe(1)
-        expect(response.body.name).toBe("Mint")
+        expect(response.body.name).toBe("mint")
         expect(response.body.calories).toBe(14)
       });
     });
@@ -54,14 +55,14 @@ describe('Food update api', () => {
       })
       .then(food => {
         expect(food.id).toBe(1)
-        expect(food.name).toBe("Cheetos")
+        expect(food.name).toBe("cheetos")
         expect(food.calories).toBe(30)
       });
 
       const body = {
                     "food":
                       {
-                        "name": "Mint",
+                        "name": "mint",
                         "calories": 14
                       }
                     }
@@ -76,7 +77,7 @@ describe('Food update api', () => {
       })
       .then(food => {
         expect(food.id).toBe(1)
-        expect(food.name).toBe("Mint")
+        expect(food.name).toBe("mint")
         expect(food.calories).toBe(14)
       });
     });
@@ -86,7 +87,7 @@ describe('Food update api', () => {
         const body = {
                       "food":
                         {
-                          "name": "Mint",
+                          "name": "mint",
                           "calories": 14
                         }
                       }

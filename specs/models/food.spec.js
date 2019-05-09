@@ -8,24 +8,27 @@ describe('Food Model test', () => {
     shell.exec('npx sequelize db:create')
   });
   beforeEach(() => {
-      shell.exec('npx sequelize db:migrate')
-    });
-  afterEach(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
     shell.exec('npx sequelize db:migrate:undo:all')
+    shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate')
+  });
+  afterEach(() => {
+  });
+  afterAll(() => {
+    shell.exec('npx sequelize db:seed:undo:all')
   });
 
   test('It should exist', () => {
-    return Food.create({name: 'Cheetos', calories: 30})
+    return Food.create({name: 'cheetos', calories: 30})
     .then(cheetos => {
       expect(cheetos).toBeInstanceOf(Food)
     })
   })
 
   test('It has attributes', () => {
-    return Food.create({name: 'Cheetos', calories: 30})
+    return Food.create({name: 'cheetos', calories: 30})
     .then(cheetos => {
-      expect(cheetos.name).toBe('Cheetos')
+      expect(cheetos.name).toBe('cheetos')
       expect(cheetos.calories).toBe(30)
     })
   })
