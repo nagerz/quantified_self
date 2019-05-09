@@ -39,36 +39,33 @@ router.get("/:id", async function(req, res, next) {
 router.post("/", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   const calOrNameErrorMessage = "Name/Calories must be passed in to the body via x-www-form-urlencoded in the format of name or calories as the key and item name or calories count as the value without quotes"
-  if (req.body.name === undefined) {
+  //Use validate request here
+  if (!req.body.name || !req.body.calories) {
     res.status(400).send(JSON.stringify(calOrNameErrorMessage))
   } else {
-    const name = upCase(req.body.name)
+    const name = downCase(req.body.name)
     Food.findOrCreate({
-        where: {
-          name: name,
-          calories: req.body.calories
-        }
-      })
-      .then(food => {
-        if (!food) {
-          res.status(400).send({
-            error
-          })
-        } else {
-          res.status(200).send(JSON.stringify(parsedFood(food[0])))
-        }
-      })
-      .catch(error => {
-        if (error.message.includes("WHERE parameter")) {
-          res.status(400).send(JSON.stringify(calOrNameErrorMessage))
-        } else if (typeof(req.body.calories) === "string") {
-          res.status(400).send(JSON.stringify("Please pass the calories datatype as a Number"))
-        } else {
-          res.status(500).send({
-            error
-          })
-        }
-      })
+      where: {name: name},
+      defaults: {calories: req.body.calories}
+    })
+    .spread((food, created) => {
+      if (created) {
+        res.status(200).send(JSON.stringify(parsedFood(food)))
+      }else{
+        res.status(400).send({error:"Food already exists."})
+      }
+    })
+    .catch(error => {
+      if (error.message.includes("WHERE parameter")) {
+        res.status(400).send(JSON.stringify(calOrNameErrorMessage))
+      } else if (typeof(req.body.calories) === "string") {
+        res.status(400).send(JSON.stringify("Please pass the calories datatype as a Number"))
+      } else {
+        res.status(500).send({
+          error
+        })
+      }
+    })
   }
 });
 
@@ -124,8 +121,8 @@ function parsedFood(food) {
   }
 }
 
-function upCase(name) {
-  return name.charAt(0).toUpperCase() + name.slice(1)
+function downCase(name) {
+  return name.toLowerCase()
 }
 
 module.exports = router;
