@@ -6,21 +6,21 @@ module.exports = {
       queryInterface.bulkInsert('Food', [
           {
             id: 1,
-            name: 'Cheetos',
+            name: 'cheetos',
             calories: 30,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             id: 2,
-            name: 'Apple',
+            name: 'apple',
             calories: 5,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             id: 3,
-            name: 'Pizza',
+            name: 'pizza',
             calories: 400,
             createdAt: new Date(),
             updatedAt: new Date()
