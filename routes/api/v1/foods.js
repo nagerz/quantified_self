@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
 const fetch = require('node-fetch');
+var pry = require('pryjs');
 
 router.get("/", function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -73,6 +74,23 @@ router.post("/", function(req, res, next) {
   }
 })
 
+router.delete('/:id', async (req, res, next) => {
+  res.setHeader("Content-Type", "application/json");
+  try {
+    const food = await Food.findOne({where: {id: req.url.slice(1)}})
+    if (!food) {
+      res.status(404).send()
+    } else {
+      // Delete food from database
+      
+      res.status(204).send()
+    }
+  }
+  catch(error) {
+    res.status(500).send({ error })
+  }
+})
+
 function parsedFood(food) {
   return {
     "id": food.id,
@@ -84,16 +102,5 @@ function parsedFood(food) {
 function upCase(name) {
   return name.charAt(0).toUpperCase() + name.slice(1)
 }
-
-router.delete('/', function(req, res, next) {
-  res.setHeader("Content-Type", "application/json");
-
-  try {
-    res.status(204).send()
-  }
-  catch(error) {
-    res.status(500).send({ error })
-  }
-})
 
 module.exports = router;
