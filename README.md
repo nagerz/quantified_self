@@ -139,6 +139,9 @@ body:
 "Please pass the calories datatype as a Number"
 ```
 
+###### Food Deletion
+A food item can be deleted from the database via a `DELETE` request to `/api/v1/foods/:id`, utilizing the `id` of an existing food item in the database. A successful response will return a `204` status code, a unsuccessful response due to an `id` not found in the database will return a `404` status code.
+
 ## Tools
 * Postman
 * dotenv
