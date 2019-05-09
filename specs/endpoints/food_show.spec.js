@@ -7,11 +7,11 @@ describe('Food show api', () => {
     shell.exec('npx sequelize db:create')
   });
   beforeEach(() => {
-      shell.exec('npx sequelize db:migrate')
-      shell.exec('npx sequelize db:seed:all')
-    });
+    shell.exec('npx sequelize db:migrate')
+    shell.exec('npx sequelize db:seed:all')
+  });
   afterEach(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   describe('Test GET /api/v1/foods/:id path', () => {
@@ -32,6 +32,11 @@ describe('Food show api', () => {
     test('it should return a 404 status when unsuccessful', () => {
       return request(app).get("/api/v1/foods/4").then(response => {
         expect(response.status).toBe(404)
+      });
+    });
+
+    test('it should return an error message when unsuccessful', () => {
+      return request(app).get("/api/v1/foods/4").then(response => {
         expect(response.body.error).toBe("Requested food item could not be found.")
       });
     });
