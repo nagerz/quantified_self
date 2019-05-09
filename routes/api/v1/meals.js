@@ -29,7 +29,6 @@ router.get("/:id/foods", async function(req, res, next) {
       }
     })
     .catch(error => {
-      // Should this be a 500 internal server error?
       res.status(404).send({
         error
       })
