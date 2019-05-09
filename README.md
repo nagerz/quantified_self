@@ -193,6 +193,7 @@ If the request is unsuccessful due to no meals being stored in the database, the
 * scriptjs
 * shelljs
 * supertest
+* beautify
 ------>>>>>>>> add more tools (APIs used)
 
 ## Known Issues
