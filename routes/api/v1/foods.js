@@ -123,7 +123,7 @@ router.delete('/:id', async (req, res, next) => {
     })
     if (!food) {
       const message = {
-        "error": "The requested food item could not be found."
+        "error": "Requested food item could not be found."
       }
       res.status(404).send(JSON.stringify(message))
     } else {

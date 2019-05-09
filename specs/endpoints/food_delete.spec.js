@@ -4,15 +4,61 @@ var app = require('../../app');
 var Food = require('../../models').Food;
 
 describe('Food delete API', () => {
-  beforeEach(() => {
-    specHelper.testSetup()
-  });
-  afterEach(() => {
-    specHelper.tearDown()
-  });
+  describe('Test DELETE /api/v1/foods/:id path', () => {
+    beforeEach(() => {
+      specHelper.testSetup()
+    });
+    afterEach(() => {
+      specHelper.tearDown()
+    });
 
-  describe('', () => {
     test('it should delete a food successfully', () => {
+      Food.create({
+        name:"test food",
+        calories: 30
+      })
+      .then(food => {
+        var id = food.id
+      })
+
+      return request(app).get(`/api/v1/foods/${food.id}`)
+      .then(response => {
+        expect(response.status).toBe(200)
+      })
+
+      return request(app).delete(`/api/v1/foods/${food.id}`)
+      .then(response => {
+        expect(response.status).toBe(204)
+      })
+
+      return request(app).get(`/api/v1/foods/${food.id}`)
+      .then(response => {
+        expect(response.status).toBe(404),
+        expect(response.body.error).toBe("Requested food item could not be found.")
+      })
+    })
+
+    test('it returns a 404 if the id does not match a food record in the database', () => {
+      shell.exec('npx sequelize db:seed:undo:all')
+      //const id = 99999
+
+      return request(app).delete('/api/v1/foods/1')
+      .then(response => {
+        expect(response.status).toBe(404),
+        expect(response.body.error).toBe("Requested food item could not be found.")
+      })
+    })
+
+    test('it should return 404 if the id not in the url', () => {
+      return request(app).delete('/api/v1/foods')
+      .then(response => {
+        expect(response.status).toBe(404)
+      })
+    })
+  })
+});
+
+
       // Below is an alternative way to create a food. Although, by utilizing this way,
       // I am receiving the error that food cannot be created without a name, I don't understand
       // why the given name of Cheese Puffs is not being utilized.
@@ -31,22 +77,22 @@ describe('Food delete API', () => {
 //  Check the count of Food items in the database, then send a DELETE request,
 // And check the count of items in the database again.
 
-      const newFood = {
-        name: "Pringles",
-        calories: 27
-      }
-
-      return request(app).post("/api/v1/foods").send(newFood)
-      .then(response => {
-        expect(response.status).toBe(200)
-        const matchingFoods = Food.findAndCountAll({
-          where: {
-            name: "Pringles"
-          }
-        })
-          .then(foods => {
-            // This line doesn't seem to be running
-            expect(foods.count).toBe(1)
+      // const newFood = {
+      //   name: "Pringles",
+      //   calories: 27
+      // }
+      //
+      // return request(app).post("/api/v1/foods").send(newFood)
+      // .then(response => {
+      //   expect(response.status).toBe(200)
+      //   const matchingFoods = Food.findAndCountAll({
+      //     where: {
+      //       name: "Pringles"
+      //     }
+      //   })
+      //     .then(foods => {
+      //       // This line doesn't seem to be running
+      //       expect(foods.count).toBe(1)
 
 // I'd like to utilize the below code once the above it worked out and we feel confident
 //  that a food item is being created in the test database.
@@ -61,16 +107,16 @@ describe('Food delete API', () => {
               //   .then(response => {
                 //     expect(response).toBe([])
                 //   })
-              // })
-          })
-
-
-      })
-
-
-
-
-    })
+    //           // })
+    //       })
+    //
+    //
+    //   })
+    //
+    //
+    //
+    //
+    // })
 
 // The below tests are passing, but are commented out for the sake of simplicity until the above if figured out.
 
@@ -93,5 +139,5 @@ describe('Food delete API', () => {
     //       expect(response.status).toBe(404)
     //     })
     // })
-  })
-})
+//   })
+// })
