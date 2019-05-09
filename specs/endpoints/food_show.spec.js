@@ -10,6 +10,7 @@ describe('Food show API', () => {
     afterEach(() => {
       specHelper.tearDown()
     });
+    
     test('it should return a 200 status', () => {
       return request(app).get("/api/v1/foods/1").then(response => {
         expect(response.status).toBe(200)

@@ -4,14 +4,14 @@ var app = require('../../app');
 var Meal = require('../../models').Meal;
 
 describe('Meal show API', () => {
-  beforeEach(() => {
-    specHelper.testSetup()
-  });
-  afterEach(() => {
-    specHelper.tearDown()
-  });
-
   describe('Test GET /api/v1/meals/:id/foods path', () => {
+    beforeEach(() => {
+      specHelper.testSetup()
+    });
+    afterEach(() => {
+      specHelper.tearDown()
+    });
+
     test('it should return a 200 status', () => {
       return request(app).get("/api/v1/meals/1/foods").then(response => {
         expect(response.status).toBe(200)
