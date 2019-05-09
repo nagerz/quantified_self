@@ -20,14 +20,6 @@ describe('Food create API', () => {
         name: "Pringles",
         calories: 27
       }
-      return request(app).post("/api/v1/foods").send(newFood)
-        .then(response => {
-          expect(response.status).toBe(200),
-            expect(response.body).toHaveProperty("id"),
-            expect(response.body.name).toBe("Pringles"),
-            expect(response.body.calories).toBe(27)
-        })
-
       const newFoodPringlesNotCapitalized = {
         name: "pringles",
         calories: 27
@@ -35,9 +27,16 @@ describe('Food create API', () => {
       return request(app).post("/api/v1/foods").send(newFood)
         .then(response => {
           expect(response.status).toBe(200),
-            expect(response.body.id).toBe(1),
+            expect(response.body).toHaveProperty("id"),
             expect(response.body.name).toBe("Pringles"),
             expect(response.body.calories).toBe(27)
+        })
+        .then(( ) => {
+          return request(app).post("/api/v1/foods").send(newFoodPringlesNotCapitalized)
+            .then(response => {
+              // This expectation will need to be changed to a 400 status code, as the object will already be in the database.
+              expect(response.status).toBe(200)
+            })
         })
     })
 

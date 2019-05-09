@@ -12,6 +12,7 @@ describe('Food Model test', () => {
     });
   afterEach(() => {
     shell.exec('npx sequelize db:seed:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
 
   test('It should exist', () => {
