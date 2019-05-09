@@ -36,4 +36,4 @@ describe('Meal Model test', () => {
   test('It cannot be created with a case insesntive duplicate name', () => {
     expect(Meal.create({ name: 'BreakFast' })).rejects.toThrow()
   });
-})
+});

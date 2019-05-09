@@ -83,7 +83,7 @@ describe('Food create API', () => {
         })
       })
 
-      test('it should not create a food if unsuccessful due to incorrect datatype for calorie', () => {
+      test('it should not create a food if unsuccessful due to incorrect datatype for calories', () => {
         const newFood = {
           name: "test food",
           calories: "twenty"

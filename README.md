@@ -48,7 +48,7 @@ The application provides the following endpoints:
 #### Food Endpoints
 ###### Food Index
 
-All food items currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods` endpoint.
+All food items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/foods` endpoint.
 
 If the request is successful, the application will return an array containing food item objects, along with a status code of 200.
 
@@ -147,6 +147,42 @@ A food item can be deleted from the database via a `DELETE` request to `/api/v1/
  {"error": "The requested food item could not be found and was therefore not deleted."}
  ```
 
+###### Meal Index
+All meal items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/meals` endpoint.
+
+If the request is successful, the application will return an array containing meals objects, along with a status code of 200.
+
+``` HTTP
+status: 200
+body:
+
+[
+  {
+      "id": 1,
+      "name": "Breakfast",
+      "Food": [
+          {
+              "id": 1,
+              "name": "Cheetos",
+              "calories": 12
+          },
+          {
+              "id": 2,
+              "name": "apple",
+              "calories": 5
+          },
+          {
+              "id": 3,
+              "name": "pizza",
+              "calories": 500
+          }
+      ]
+  }
+]
+```
+If the request is unsuccessful due to no meals being stored in the database, the application will return an error message of `{error: 'There are no meals in the database.}`, along with a status code of 404.
+
+
 ## Tools
 * Postman
 * dotenv
@@ -157,6 +193,7 @@ A food item can be deleted from the database via a `DELETE` request to `/api/v1/
 * scriptjs
 * shelljs
 * supertest
+* beautify
 ------>>>>>>>> add more tools (APIs used)
 
 ## Known Issues
