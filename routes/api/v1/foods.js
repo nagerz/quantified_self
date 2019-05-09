@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 var Food = require('../../../models').Food;
 const fetch = require('node-fetch');
-var pry = require('pryjs');
 
 router.get("/", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -117,7 +116,6 @@ function validateRequest(req) {
 router.delete('/:id', async (req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   try {
-    eval(pry.it)
     const food = await Food.findOne({
       where: {
         id: req.params.id
