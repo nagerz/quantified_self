@@ -4,11 +4,9 @@ var app = require('../../app');
 
 describe('Meal index API', () => {
   describe('Test GET /api/v1/meals', () => {
-    beforeEach(() => {
-      specHelper.testSetup()
-    });
-    afterEach(() => {
+    beforeAll(() => {
       specHelper.tearDown()
+      specHelper.testSetup()
     });
 
     test('it should return a 200 status', () => {
