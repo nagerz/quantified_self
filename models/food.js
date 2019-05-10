@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       .then(food => {
         if (food) {
           food.update({
-            name: req.body.name,
+            name: req.body.name.toLowerCase(),
             calories: req.body.calories
           })
           .then(food => {
