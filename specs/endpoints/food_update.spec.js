@@ -57,7 +57,7 @@ describe('Food update API', () => {
 
       test('if name already exists (case insensitive)', () => {
         const body = {
-                      "name": "CheEtOs",
+                      "name": "CheEtos",
                       "calories": 14
                     }
 

@@ -5,11 +5,9 @@ var Meal = require('../../models').Meal;
 
 describe('Meal show API', () => {
   describe('Test GET /api/v1/meals/:id/foods path', () => {
-    beforeEach(() => {
-      specHelper.testSetup()
-    });
-    afterEach(() => {
+    beforeAll(() => {
       specHelper.tearDown()
+      specHelper.testSetup()
     });
 
     test('it should return a 200 status', () => {
