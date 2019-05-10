@@ -1,7 +1,7 @@
 version: 2 # use CircleCI 2.0
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/quantified-self-api # directory where steps will run
+    working_directory: ~/quantified_self # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/node:lts # ...with this image as the primary container; this is where all `steps` will run
       - image: circleci/postgres:alpine # and this image as the secondary service container
@@ -45,7 +45,7 @@ jobs: # a collection of steps
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+            git push https://heroku:6c547178-0ec9-40e0-8de8-6167bb367b30@git.heroku.com/self-quantified.git master
 
 workflows:
   version: 2
