@@ -1,21 +1,14 @@
-var shell = require('shelljs');
+var specHelper = require('../spec_helper');
 var request = require("supertest");
 var app = require('../../app');
 var Meal = require('../../models').Meal;
 
 describe('Meal Model test', () => {
-  beforeAll(() => {
-    shell.exec('npx sequelize db:create')
-  });
   beforeEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
-    shell.exec('npx sequelize db:seed:undo:all')
-    shell.exec('npx sequelize db:migrate')
+    specHelper.testSetup()
   });
   afterEach(() => {
-  });
-  afterAll(() => {
-    shell.exec('npx sequelize db:seed:undo:all')
+    specHelper.tearDown()
   });
 
   test('It should exist', () => {
@@ -31,31 +24,16 @@ describe('Meal Model test', () => {
       expect(meal.name).toBe('Test meal')
     })
   })
-})
-//   //
-//   // test('It cannot be created without a name', () => {
-//   //   return Food.create({calories: 30})
-//   //   .then(error => {
-//   //     expect(error).rejects.toThrow()
-//   //   })
-//   // })
-//   //
-//   // test('It cannot be created without a calories', () => {
-//   //   return Food.create({name: "Cheetos"})
-//   //   .then(error => {
-//   //     expect(error).rejects.toThrow()
-//   //   })
-//   // })
-//   //
-//   // test('It cannot be created with a duplicate name and is case insensitive', () => {
-//   //   return Food.create({name: 'Cheetos', calories: 30})
-//   //   .then(cheetos => {
-//   //     expect(cheetos).toBeInstanceOf(Food)
-//   //   })
-//   //
-//   //   return Food.create({name: 'cheetos', calories: 30})
-//   //   .then(error => {
-//   //     expect(error).rejects.toThrow()
-//   //   })
-//   // })
-// })
+
+  test('It cannot be created without a name', () => {
+    expect(Meal.create()).rejects.toThrow()
+  })
+
+  test('It cannot be created with a duplicate name', () => {
+    expect(Meal.create({ name: 'breakfast' })).rejects.toThrow()
+  });
+
+  test('It cannot be created with a case insesntive duplicate name', () => {
+    expect(Meal.create({ name: 'BreakFast' })).rejects.toThrow()
+  });
+});

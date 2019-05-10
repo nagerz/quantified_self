@@ -1,21 +1,15 @@
-var shell = require('shelljs');
+var specHelper = require('../spec_helper');
 var request = require("supertest");
 var app = require('../../app');
 
-describe('Food index api', () => {
-  beforeAll(() => {
-    shell.exec('npx sequelize db:create')
-  });
-  beforeEach(() => {
-    shell.exec('npx sequelize db:migrate:undo:all')
-    shell.exec('npx sequelize db:seed:undo:all')
-    shell.exec('npx sequelize db:migrate')
-    shell.exec('npx sequelize db:seed:all')
-  });
-  afterEach(() => {
-  });
-
+describe('Food index API', () => {
   describe('Test GET /api/v1/foods path', () => {
+    beforeEach(() => {
+      specHelper.testSetup()
+    });
+    afterEach(() => {
+      specHelper.tearDown()
+    });
     test('it should return a 200 status', () => {
       return request(app).get("/api/v1/foods").then(response => {
         expect(response.status).toBe(200)
