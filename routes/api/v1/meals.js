@@ -4,6 +4,8 @@ var Food = require('../../../models').Food;
 var Meal = require('../../../models').Meal;
 var MealFood = require('../../../models').MealFood;
 const fetch = require('node-fetch');
+var pry = require('pryjs');
+
 
 router.get("/:id/foods", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -115,6 +117,26 @@ router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
   })
   .catch(error => {
     res.status(400).send({ error: "Invalid request." });
+  })
+})
+
+router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+  MealFood.destroy({
+      where: {
+        MealId: req.params.meal_id,
+        FoodId: req.params.food_id
+      }
+  })
+  .then(mealfood => {
+    if(mealfood) {
+      res.status(204).send()
+    }else{
+      res.status(404).send(JSON.stringify({ error: "Request does not match any records." }))
+    }
+  })
+  .catch(error => {
+    res.status(404).send(JSON.stringify({ error: "Invalid request." }))
   })
 })
 
