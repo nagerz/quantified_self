@@ -45,7 +45,7 @@ jobs: # a collection of steps
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:6c547178-0ec9-40e0-8de8-6167bb367b30@git.heroku.com/self-quantified.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 workflows:
   version: 2
