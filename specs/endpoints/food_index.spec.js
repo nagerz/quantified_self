@@ -4,12 +4,11 @@ var app = require('../../app');
 
 describe('Food index API', () => {
   describe('Test GET /api/v1/foods path', () => {
-    beforeEach(() => {
+    beforeAll(() => {
+      specHelper.tearDown()
       specHelper.testSetup()
     });
-    afterEach(() => {
-      specHelper.tearDown()
-    });
+    
     test('it should return a 200 status', () => {
       return request(app).get("/api/v1/foods").then(response => {
         expect(response.status).toBe(200)

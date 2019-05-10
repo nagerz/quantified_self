@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       .then(food => {
         if (food) {
           food.update({
-            name: req.body.food.name,
-            calories: req.body.food.calories,
+            name: req.body.name,
+            calories: req.body.calories
           })
           .then(food => {
             food ? resolve(food) : resolve(null)

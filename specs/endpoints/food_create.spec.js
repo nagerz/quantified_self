@@ -6,11 +6,9 @@ var Food = require('../../models').Food;
 describe('Food create API', () => {
   describe('test POST /api/v1/foods path', () => {
     describe('for successful request', () => {
-      beforeEach(() => {
-        specHelper.testSetup()
-      });
-      afterEach(() => {
+      beforeAll(() => {
         specHelper.tearDown()
+        specHelper.testSetup()
       });
 
       test('it should create a food successfully', () => {
@@ -30,23 +28,16 @@ describe('Food create API', () => {
     })
 
     describe('with sad path circumstances', () => {
-      beforeEach(() => {
-        specHelper.testSetup()
-      });
-      afterEach(() => {
+      beforeAll(() => {
         specHelper.tearDown()
+        specHelper.testSetup()
       });
 
       test('it should not create a food with duplicate name (case insensitive)', () => {
         const newFood = {
-          name: "RepeAt FoOd",
+          name: "CheeTos",
           calories: 27
         }
-
-        Food.create({
-          name:"repeat food",
-          calories: 30
-        })
 
         return request(app).post("/api/v1/foods").send(newFood)
         .then(response => {
