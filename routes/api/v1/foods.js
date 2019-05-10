@@ -78,7 +78,7 @@ router.patch("/:id", async function(req, res, next) {
       if(!food){
         res.status(404).send({ error: "Requested food item could not be found." });
       }else{
-        res.status(200).send(JSON.stringify(food));
+        res.status(200).send(JSON.stringify(parsedFood(food)));
       }
     })
     .catch(error => {
@@ -139,20 +139,15 @@ function validateRequest(req) {
 
 function validateRequest(req) {
   return new Promise((resolve, reject) => {
-    if (req.body.food){
-      if (req.body.food.name && req.body.food.calories){
-        if (Number.isInteger(req.body.food.calories) === true){
-          resolve(req)
-        }else{
-          error = "Invalid calories. Must be integer."
-          reject(error)
-        }
+    if (req.body.name && req.body.calories){
+      if (Number.isInteger(req.body.calories) === true){
+        resolve(req)
       }else{
-        error = "Missing information."
+        error = "Invalid calories. Must be integer."
         reject(error)
       }
     }else{
-      error = "Request missing food designation."
+      error = "Missing information."
       reject(error)
     }
   })
