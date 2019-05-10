@@ -41,29 +41,30 @@ router.get("/:id/foods", async function(req, res, next) {
 router.get("/", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
   Meal.findAll({
-      attributes: ['id', 'name'],
-      include: [{
-        model: Food,
-        attributes: ['id', 'name', 'calories'],
-        through: {
-          attributes: []
-        }
-      }]
-    })
-    .then(meals => {
-      if (!meals) {
-        res.status(404).send({
-          error: 'There are no meals in the database.'
-        })
-      } else {
-        res.status(200).send(JSON.stringify(meals))
+    order: [['id', 'ASC']],
+    attributes: ['id', 'name'],
+    include: [{
+      model: Food,
+      attributes: ['id', 'name', 'calories'],
+      through: {
+        attributes: []
       }
-    })
-    .catch(error => {
-      res.status(500).send({
-        error
+    }]
+  })
+  .then(meals => {
+    if (!meals) {
+      res.status(404).send({
+        error: 'There are no meals in the database.'
       })
+    } else {
+      res.status(200).send(JSON.stringify(meals))
+    }
+  })
+  .catch(error => {
+    res.status(500).send({
+      error
     })
+  })
 })
 
 router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
