@@ -1,4 +1,5 @@
 var specHelper = require('../spec_helper');
+var shell = require('shelljs');
 var request = require("supertest");
 var app = require('../../app');
 var Food = require('../../models').Food;
@@ -13,7 +14,7 @@ describe('Food delete API', () => {
     });
 
     test('it should delete a food successfully', () => {
-      Food.create({
+      return Food.create({
         name:"test food",
         calories: 30
       })
@@ -21,17 +22,17 @@ describe('Food delete API', () => {
         var id = food.id
       })
 
-      return request(app).get(`/api/v1/foods/${food.id}`)
+      return request(app).get(`/api/v1/foods/${id}`)
       .then(response => {
         expect(response.status).toBe(200)
       })
 
-      return request(app).delete(`/api/v1/foods/${food.id}`)
+      return request(app).delete(`/api/v1/foods/${id}`)
       .then(response => {
         expect(response.status).toBe(204)
       })
 
-      return request(app).get(`/api/v1/foods/${food.id}`)
+      return request(app).get(`/api/v1/foods/${id}`)
       .then(response => {
         expect(response.status).toBe(404),
         expect(response.body.error).toBe("Requested food item could not be found.")
@@ -39,20 +40,13 @@ describe('Food delete API', () => {
     })
 
     test('it returns a 404 if the id does not match a food record in the database', () => {
-      shell.exec('npx sequelize db:seed:undo:all')
-      //const id = 99999
+      specHelper.tearDown()
+      shell.exec('npx sequelize db:migrate')
 
       return request(app).delete('/api/v1/foods/1')
       .then(response => {
         expect(response.status).toBe(404),
         expect(response.body.error).toBe("Requested food item could not be found.")
-      })
-    })
-
-    test('it should return 404 if the id not in the url', () => {
-      return request(app).delete('/api/v1/foods')
-      .then(response => {
-        expect(response.status).toBe(404)
       })
     })
   })
