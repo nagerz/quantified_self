@@ -24,18 +24,15 @@ describe('Food update API', () => {
         })
 
         const body = {
-                      "food":
-                        {
-                          "name": "new test name",
-                          "calories": 14
-                        }
-                      }
+                      "name": "updated name",
+                      "calories": 14
+                    }
 
         return request(app).patch(`/api/v1/foods/${id}`).send(body)
         .then(response => {
           expect(response.status).toBe(200),
           expect(response.body.id).toBe(id),
-          expect(response.body.name).toBe("new test name"),
+          expect(response.body.name).toBe("updated name"),
           expect(response.body.calories).toBe(14)
         })
       });
@@ -50,12 +47,9 @@ describe('Food update API', () => {
         })
 
         const body = {
-                      "food":
-                        {
-                          "name": "updated name",
-                          "calories": 14
-                        }
-                      }
+                      "name": "updated name",
+                      "calories": 14
+                    }
 
         return request(app).patch(`/api/v1/foods/${id}`).send(body)
         .then(response => {
@@ -67,7 +61,7 @@ describe('Food update API', () => {
         })
         .then(food => {
           expect(food.id).toBe(id)
-          expect(food.name).toBe("updat name")
+          expect(food.name).toBe("updated name")
           expect(food.calories).toBe(14)
         });
       });
@@ -81,17 +75,14 @@ describe('Food update API', () => {
         specHelper.tearDown()
       });
 
-      test('if invalid Id', () => {
+      test.skip('if invalid Id', () => {
         specHelper.tearDown()
         shell.exec('npx sequelize db:migrate')
 
         const body = {
-                      "food":
-                        {
-                          "name": "valid name",
-                          "calories": 14
-                        }
-                      }
+                      "name": "valid name",
+                      "calories": 14
+                    }
 
         return request(app).patch("/api/v1/foods/1").send(body)
         .then(response => {
@@ -118,12 +109,9 @@ describe('Food update API', () => {
         })
 
         const body = {
-                      "food":
-                        {
-                          "name": "DifFerent Test nAmE",
-                          "calories": 14
-                        }
-                      }
+                      "name": "DifFerent Test nAmE",
+                      "calories": 14
+                    }
 
         return request(app).patch(`/api/v1/foods/${id1}`).send(body)
         .then(response => {
@@ -134,11 +122,8 @@ describe('Food update API', () => {
 
       test('if request if missing a name', () => {
         const body = {
-                      "food":
-                        {
-                          "calories": 14
-                        }
-                      }
+                      "calories": 14
+                    }
 
         return request(app).patch(`/api/v1/foods/1`).send(body)
         .then(response => {
@@ -149,23 +134,7 @@ describe('Food update API', () => {
       test('if request if missing calories', () => {
         //needs revisiting. Always passes. Issue with multiple returns.
         const body = {
-                      "food":
-                        {
-                          "name": "Mint"
-                        }
-                      }
-
-        return request(app).patch("/api/v1/foods/1").send(body)
-        .then(response => {
-          expect(response.status).toBe(404)
-        })
-      });
-
-      test('if request if missing food tag', () => {
-        //needs revisiting. Always passes. Issue with multiple returns.
-        const body = {
-                      "name": "Mint",
-                      "calories": 14
+                      "name": "valid name"
                     }
 
         return request(app).patch("/api/v1/foods/1").send(body)
