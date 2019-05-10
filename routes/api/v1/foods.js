@@ -92,27 +92,6 @@ router.patch("/:id", async function(req, res, next) {
   })
 });
 
-function validateRequest(req) {
-  return new Promise((resolve, reject) => {
-    if (req.body.food){
-      if (req.body.food.name && req.body.food.calories){
-        if (Number.isInteger(req.body.food.calories) === true){
-          resolve(req)
-        }else{
-          error = "Invalid calories. Must be integer."
-          reject(error)
-        }
-      }else{
-        error = "Missing information."
-        reject(error)
-      }
-    }else{
-      error = "Request missing food designation."
-      reject(error)
-    }
-  })
-}
-
 router.delete('/:id', async (req, res, next) => {
   res.setHeader("Content-Type", "application/json");
   try {
@@ -136,6 +115,27 @@ router.delete('/:id', async (req, res, next) => {
     })
   }
 })
+
+function validateRequest(req) {
+  return new Promise((resolve, reject) => {
+    if (req.body.food){
+      if (req.body.food.name && req.body.food.calories){
+        if (Number.isInteger(req.body.food.calories) === true){
+          resolve(req)
+        }else{
+          error = "Invalid calories. Must be integer."
+          reject(error)
+        }
+      }else{
+        error = "Missing information."
+        reject(error)
+      }
+    }else{
+      error = "Request missing food designation."
+      reject(error)
+    }
+  })
+}
 
 function parsedFood(food) {
   return {

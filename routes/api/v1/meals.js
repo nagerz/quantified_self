@@ -128,16 +128,16 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
         FoodId: req.params.food_id
       }
   })
-    .then(meal => {
-      if (meal === 1) {
-        res.status(204).send()
-      }
-    })
-    .catch(error => {
-      res.status(500).send({
-        error
-      })
-    })
+  .then(mealfood => {
+    if(mealfood) {
+      res.status(204).send()
+    }else{
+      res.status(404).send(JSON.stringify({ error: "Request does not match any records." }))
+    }
+  })
+  .catch(error => {
+    res.status(404).send(JSON.stringify({ error: "Invalid request." }))
+  })
 })
 
 module.exports = router;
