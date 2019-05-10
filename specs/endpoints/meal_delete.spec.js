@@ -1,8 +1,8 @@
 var shell = require('shelljs');
 var request = require("supertest");
 var app = require('../../app');
-var Meal = require('../../../models').Meal;
-var MealFood = require('../../../models').MealFood;
+var Meal = require('../../models').Meal;
+var MealFood = require('../../models').MealFood;
 
 describe('Meal delete API', () => {
   beforeAll(() => {
@@ -25,8 +25,7 @@ describe('Meal delete API', () => {
       // })
 
       return request(app).delete("/api/v1/meals/1/foods/1").then(response => {
-        expect(response.status).toBe(200)
-        expect(response.error).toBe("{error: 'The food has been successfully deleted from the meal.'}")
+        expect(response.status).toBe(204)
         // Meals.findAll(include: [{model: Food}]).count
         // .then(meals => {
         //
@@ -34,10 +33,10 @@ describe('Meal delete API', () => {
       })
     })
 
-    test('it should return a 404 status', () => {
-      return request(app).delete("/api/v1/meals/1/foods/1").then(response => {
-        expect(response.status).toBe(404)
-      })
-    })
+    // test('it should return a 404 status', () => {
+    //   return request(app).delete("/api/v1/meals/1/foods/1").then(response => {
+    //     expect(response.status).toBe(404)
+    //   })
+    // })
   })
 })
