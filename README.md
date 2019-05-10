@@ -194,6 +194,7 @@ If the request is unsuccessful due to no meals being stored in the database, the
 * shelljs
 * supertest
 * beautify
+* nyc
 ------>>>>>>>> add more tools (APIs used)
 
 ## Known Issues
