@@ -182,6 +182,16 @@ body:
 ```
 If the request is unsuccessful due to no meals being stored in the database, the application will return an error message of `{error: 'There are no meals in the database.}`, along with a status code of 404.
 
+###### Meal Deletion
+To delete a food item on a meal, a successful `POST` request to the endpoint `/api/v1/meals/:meal_id/foods/:food_id` will delete the applicable MealFood record in the database and return a status code of `204`. An unsuccessful request will return the following:
+``` HTTP
+status: 404
+body:
+{
+    "error": "Request does not match any records."
+}
+```
+
 
 ## Tools
 * Postman
