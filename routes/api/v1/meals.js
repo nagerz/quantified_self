@@ -61,9 +61,12 @@ router.get("/", async function(req, res, next) {
     include: [{
       model: Food,
       attributes: ['id', 'name', 'calories'],
-      through: {
-        attributes: []
-      }
+      through: {attributes: []}
+    },
+    {
+      model: Recipe,
+      attributes: ['id', 'name', 'calories', 'url'],
+      through: {attributes: []}
     }]
   })
   .then(meals => {
