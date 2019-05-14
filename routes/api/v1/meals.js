@@ -75,13 +75,15 @@ router.get("/", async function(req, res, next) {
         error: 'There are no meals in the database.'
       })
     } else {
-      res.status(200).send(JSON.stringify(meals))
+      addTotalCalories(meals)
+      .then(meals => {
+        res.status(200).send(meals)
+      })
     }
   })
   .catch(error => {
-    res.status(500).send({
-      error
-    })
+    eval(pry.it)
+    res.status(500).send({error: "test 3"})
   })
 })
 
@@ -234,5 +236,21 @@ function validateRecipeRequest(req) {
     }
   })
 };
+
+function addTotalCalories(meals) {
+  return new Promise((resolve, reject) => {
+    var calMeals = []
+    meals.map(meal => {
+      meal = meal.toJSON();
+      Meal.totalCalories(meal)
+      .then(totalCal => {
+        meal.totalCalories = totalCal
+        calMeals.push(meal)
+      })
+    })
+    resolve(calMeals)
+  })
+};
+
 
 module.exports = router;
