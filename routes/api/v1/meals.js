@@ -122,7 +122,7 @@ router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
   })
 });
 
-router.post("/:meal_id/recipe", async function(req, res, next) {
+router.post("/:meal_id/recipes", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
   validateRecipeRequest(req)
   .then(req => {
