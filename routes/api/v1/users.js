@@ -4,7 +4,7 @@ var User = require('../../../models').User;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var hat = require('hat');
-var pry = require('pryjs');
+//var pry = require('pryjs');
 
 router.get("/", function(req, res, next) {
   User.findAll()
