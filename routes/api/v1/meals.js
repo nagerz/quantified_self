@@ -205,20 +205,15 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
 
 function validateRecipeRequest(req) {
   return new Promise((resolve, reject) => {
-    if (req.body.api_key){
-      if (req.body.recipe && req.body.recipe.name && req.body.recipe.calories && req.body.recipe.url){
-        if (Number.isInteger(req.body.recipe.calories) === true){
-          resolve(req)
-        }else{
-          error = "Invalid calories. Must be integer."
-          reject(error)
-        }
+    if (req.body.recipe && req.body.recipe.name && req.body.recipe.calories && req.body.recipe.url){
+      if (Number.isInteger(req.body.recipe.calories) === true){
+        resolve(req)
       }else{
-        error = "Missing/incorrectly formatted recipe information."
+        error = "Invalid calories. Must be integer."
         reject(error)
       }
     }else{
-      error = "Missing api key."
+      error = "Missing/incorrectly formatted recipe information."
       reject(error)
     }
   })
