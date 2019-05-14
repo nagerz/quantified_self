@@ -6,7 +6,7 @@ var Recipe = require('../../../models').Recipe;
 var MealFood = require('../../../models').MealFood;
 var MealRecipe = require('../../../models').MealRecipe;
 const fetch = require('node-fetch');
-//var pry = require('pryjs');
+var pry = require('pryjs');
 
 router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -38,7 +38,12 @@ router.get("/:id", async function(req, res, next) {
         error: "Requested meal could not be found."
       });
     } else {
-      res.status(200).send(JSON.stringify(meal));
+      meal = meal.toJSON();
+      Meal.totalCalories(meal)
+      .then(totalCal => {
+        meal.totalCalories = totalCal
+        res.status(200).send(JSON.stringify(meal));
+      })
     }
   })
   .catch(error => {
