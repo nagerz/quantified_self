@@ -1,26 +1,26 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('UserMeals', {
+    return queryInterface.createTable('MealRecipes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      MealId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'Meals',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       },
-      MealId: {
+      RecipeId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Meals',
+          model: 'Recipes',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -37,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('UserMeals');
+    return queryInterface.dropTable('MealRecipes');
   }
 };
