@@ -221,6 +221,26 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
   })
 });
 
+router.delete('/:meal_id/recipes/:recipe_id', function(req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+  MealRecipe.destroy({
+      where: {
+        MealId: req.params.meal_id,
+        RecipeId: req.params.recipe_id
+      }
+  })
+  .then(mealrecipe => {
+    if(mealrecipe) {
+      res.status(204).send()
+    }else{
+      res.status(404).send(JSON.stringify({ error: "Request does not match any records." }))
+    }
+  })
+  .catch(error => {
+    res.status(404).send(JSON.stringify({ error: "Invalid request." }))
+  })
+});
+
 function validateRecipeRequest(req) {
   return new Promise((resolve, reject) => {
     if (req.body.recipe && req.body.recipe.name && req.body.recipe.calories && req.body.recipe.url){
