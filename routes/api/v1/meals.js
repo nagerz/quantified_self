@@ -6,7 +6,7 @@ var Recipe = require('../../../models').Recipe;
 var MealFood = require('../../../models').MealFood;
 var MealRecipe = require('../../../models').MealRecipe;
 const fetch = require('node-fetch');
-var pry = require('pryjs');
+//var pry = require('pryjs');
 
 router.get("/:id/foods", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
