@@ -12,9 +12,9 @@ describe('Meal index API', () => {
     test('it should return a 200 status', () => {
       return request(app).get('/api/v1/meals').then(response => {
         expect(response.status).toBe(200)
-        expect(response.body.length).toBe(5)
+        expect(response.body.length).toBe(7)
         expect(response.body[0].id).toBe(1)
-        expect(response.body[0].name).toBe('Breakfast')
+        expect(response.body[0].name).toBe('Monday Breakfast')
         expect(response.body[0].Food.length).toBe(3)
         expect(response.body[0].Food[0].id).toBe(1)
         expect(response.body[0].Food[0].name).toBe('cheetos')
