@@ -1,3 +1,5 @@
+var pry = require('pryjs');
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Meal = sequelize.define('Meal', {
@@ -11,5 +13,19 @@ module.exports = (sequelize, DataTypes) => {
     Meal.belongsToMany(models.Recipe, {through: models.MealRecipe, foreignKey: 'MealId'});
     Meal.belongsToMany(models.User, {through: models.UserMeal, foreignKey: 'MealId'});
   };
+
+  Meal.totalCalories = function(meal) {
+    return new Promise((resolve, reject) => {
+      var total = 0
+      meal.Food.forEach(food => {
+        total += food.calories
+      })
+      meal.Recipes.forEach(recipe => {
+        total += recipe.calories
+      })
+      resolve(total);
+    })
+  };
+
   return Meal;
 };

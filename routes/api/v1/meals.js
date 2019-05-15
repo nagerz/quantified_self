@@ -7,20 +7,29 @@ var MealFood = require('../../../models').MealFood;
 var MealRecipe = require('../../../models').MealRecipe;
 const fetch = require('node-fetch');
 
-router.get("/:id/foods", async function(req, res, next) {
+router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   Meal.findOne({
     where: {
       id: req.params.id
     },
     attributes: ['id', 'name'],
-    include: [{
-      model: Food,
-      attributes: ['id', 'name', 'calories'],
-      through: {
-        attributes: []
+    include: [
+      {
+        model: Food,
+        attributes: ['id', 'name', 'calories'],
+        through: {
+          attributes: []
+        }
+      },
+      {
+        model: Recipe,
+        attributes: ['id', 'name', 'calories', 'url'],
+        through: {
+          attributes: []
+        }
       }
-    }]
+    ]
   })
   .then(meal => {
     if (!meal) {
@@ -28,7 +37,12 @@ router.get("/:id/foods", async function(req, res, next) {
         error: "Requested meal could not be found."
       });
     } else {
-      res.status(200).send(JSON.stringify(meal));
+      meal = meal.toJSON();
+      Meal.totalCalories(meal)
+      .then(totalCal => {
+        meal.totalCalories = totalCal
+        res.status(200).send(JSON.stringify(meal));
+      })
     }
   })
   .catch(error => {
@@ -46,9 +60,12 @@ router.get("/", async function(req, res, next) {
     include: [{
       model: Food,
       attributes: ['id', 'name', 'calories'],
-      through: {
-        attributes: []
-      }
+      through: {attributes: []}
+    },
+    {
+      model: Recipe,
+      attributes: ['id', 'name', 'calories', 'url'],
+      through: {attributes: []}
     }]
   })
   .then(meals => {
@@ -57,13 +74,15 @@ router.get("/", async function(req, res, next) {
         error: 'There are no meals in the database.'
       })
     } else {
-      res.status(200).send(JSON.stringify(meals))
+      addTotalCalories(meals)
+      .then(meals => {
+        res.status(200).send(meals)
+      })
     }
   })
   .catch(error => {
-    res.status(500).send({
-      error
-    })
+    eval(pry.it)
+    res.status(500).send({error: "test 3"})
   })
 })
 
@@ -199,7 +218,6 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
   .catch(error => {
     res.status(404).send(JSON.stringify({ error: "Invalid request." }))
   })
-
 });
 
 function validateRecipeRequest(req) {
@@ -217,5 +235,21 @@ function validateRecipeRequest(req) {
     }
   })
 };
+
+function addTotalCalories(meals) {
+  return new Promise((resolve, reject) => {
+    var calMeals = []
+    meals.map(meal => {
+      meal = meal.toJSON();
+      Meal.totalCalories(meal)
+      .then(totalCal => {
+        meal.totalCalories = totalCal
+        calMeals.push(meal)
+      })
+    })
+    resolve(calMeals)
+  })
+};
+
 
 module.exports = router;
