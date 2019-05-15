@@ -7,10 +7,12 @@
     "test": "npx jest --forceExit --runInBand"
   },
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^8.0.0",
     "express": "~4.16.0",
+    "hat": "0.0.3",
     "morgan": "~1.9.0",
     "node-fetch": "^2.5.0",
     "pg": "^7.10.0",
