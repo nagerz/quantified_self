@@ -10,21 +10,27 @@ describe('Meal Model test', () => {
   });
 
   test('It should exist', () => {
-    return Meal.create({name: 'test meal'})
+    return Meal.create({name: 'test meal',
+                        date: new Date()})
     .then(meal => {
       expect(meal).toBeInstanceOf(Meal)
     })
   })
 
   test('It has attributes', () => {
-    return Meal.create({name: 'another test meal'})
+    return Meal.create({name: 'another test meal',
+                        date: new Date()})
     .then(meal => {
       expect(meal.name).toBe('another test meal')
+      expect(meal.date).toBeInstanceOf(Date)
     })
   })
 
   test('It cannot be created without a name', () => {
-    expect(Meal.create()).rejects.toThrow()
+    expect(Meal.create({date: new Date()})).rejects.toThrow()
+  })
+  test('It cannot be created without a date', () => {
+    expect(Meal.create({name: 'test meal'})).rejects.toThrow()
   })
 
   test('It cannot be created with a duplicate name', () => {
