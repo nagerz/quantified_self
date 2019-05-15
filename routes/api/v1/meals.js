@@ -5,7 +5,9 @@ var Meal = require('../../../models').Meal;
 var Recipe = require('../../../models').Recipe;
 var MealFood = require('../../../models').MealFood;
 var MealRecipe = require('../../../models').MealRecipe;
+var User = require('../../../models').User;
 const fetch = require('node-fetch');
+var pry = require('pryjs');
 
 router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -85,6 +87,58 @@ router.get("/", async function(req, res, next) {
     res.status(500).send({error: "test 3"})
   })
 })
+
+router.post("/", async function(req, res, next) {
+  res.setHeader("content-Type", "application/json");
+  validateMealRequest(req)
+  .then(req => {
+    if (req.body.api_key){
+      User.findOne({
+        where: {
+          api_key: req.body.api_key
+        }
+      })
+      .then(user => {
+        if(!user){
+          res.setHeader("Content-Type", "application/json");
+          res.status(401).send({ error: "unauthorized" });
+        }else{
+          var date = new Date(req.body.date)
+          Meal.findOrCreate({
+            where: {
+              UserId: user.id,
+              name: req.body.name
+            },
+            defaults: {
+              date: date
+            },
+            attributes: ['id', 'name', 'date', 'UserId']
+          })
+          .spread((meal, created) => {
+            if (created) {
+              res.status(201).send(JSON.stringify(meal))
+            }else{
+              res.status(400).send({error:"That meal already exists for that user."})
+            }
+          })
+          .catch(error => {
+            res.status(400).send({ error: error });
+          })
+        }
+      })
+      .catch(error => {
+        res.status(404).send(JSON.stringify({ error: "User find error" }))
+      })
+    }else{
+      res.setHeader("Content-Type", "application/json");
+      res.status(401).send({ error: "unauthorized" });
+    }
+  })
+  .catch(error => {
+    eval(pry.it)
+    res.status(404).send(JSON.stringify({ error: error }))
+  })
+});
 
 router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
@@ -239,6 +293,23 @@ router.delete('/:meal_id/recipes/:recipe_id', function(req, res, next) {
     res.status(404).send(JSON.stringify({ error: "Invalid request." }))
   })
 });
+
+function validateMealRequest(req) {
+  return new Promise((resolve, reject) => {
+    if (req.body.name && req.body.date){
+      var date = new Date(req.body.date)
+      if (date instanceof Date && !isNaN(date.valueOf()) == true){
+        resolve(req)
+      }else{
+        error = "Invalid date."
+        reject(error)
+      }
+    }else{
+      error = "Missing name and/or date."
+      reject(error)
+    }
+  })
+};
 
 function validateRecipeRequest(req) {
   return new Promise((resolve, reject) => {
