@@ -8,7 +8,7 @@ Quantified Self is a web application designed aggregate favorite recipes, associ
 #### [**_View Quantified Self in Production_**](https://self-quantified.herokuapp.com/) </br>
 
 ### Schema
-<!-- ![Alt text](./public/images/schema.png?raw=true "Database Schema") -->
+![Alt text](./public/images/schema.png?raw=true "Database Schema")
 
 ## Getting Started
 
@@ -233,3 +233,70 @@ body:
 ### Special Recognition
 * [Dione Wilson](https://github.com/dionew1)
 * [Cory Westerfield](https://github.com/corywest)
+
+
+
+<!-- Keep the below comment block in case the schema diagram need to be altered.
+This can be done by visiting https://dbdiagram.io/d, creating a new diagram/ deleting
+the diagram in the left hand bar and pasting in the below.
+
+Table Food {
+  id int [pk]
+  name string
+  calories int
+  created_at date
+  updated_at date
+}
+
+Table Meals {
+  id int [pk]
+  name string
+  date date
+  UserId int
+  created_at date
+  updated_at date
+}
+
+Table MealFoods {
+  id int [pk]
+  MealId int
+  FoodId int
+  created_at date
+  updated_at date
+}
+
+Table Users {
+  id int [pk]
+  email string
+  password_digest string
+  api_key string
+  created_at date
+  updated_at date
+}
+
+Table Recipe {
+  id int [pk]
+  name string
+  calories int
+  url string
+  created_at date
+  updated_at date
+}
+
+Table MealRecipe {
+  id int [pk]
+  MealId int
+  RecipeId int
+  created_at date
+  updated_at date
+}
+
+Ref: "Meals"."id" < "MealRecipe"."MealId"
+
+Ref: "MealRecipe"."RecipeId" < "Recipe"."id"
+
+Ref: "Food"."id" < "MealFoods"."FoodId"
+
+Ref: "MealFoods"."MealId" < "Meals"."id"
+
+Ref: "Meals"."UserId" < "Users"."id" -->
