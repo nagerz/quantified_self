@@ -23,6 +23,12 @@ $ npx sequelize db:migrate # Runs migrations for the database setup
 $ npx sequelize db:seed:all # Runs seed file for seeding the database
 ```
 
+If Postgres was locally installed using homebrew, run the command:
+```
+/usr/local/opt/postgres/bin/createuser -s postgres
+```
+This will create a new postgres user by the name of postgres. This enables all collaborators to utilize the same username and enables the `config.json` file functionality for the database username.
+
 ## Running Tests
 
 To run the test suite, execute the following command: `npm test`. The tests will automatically run each time an update is made to the application.
