@@ -192,7 +192,7 @@ body:
 A food item can be updated in the database via a `PATCH` request to the `/api/v1/foods/:id` endpoint using the `id` of an existing food item in the database. The request must contain a food name (unique in the system) and the number of calories associated with the food matching the format provided below.
 
 ``` HTTP
-POST /api/v1/foods
+PATCH /api/v1/foods
 Content-Type: application/json
 Accept: application/json
 
