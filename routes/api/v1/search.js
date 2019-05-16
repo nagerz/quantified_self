@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const fetch = require('node-fetch');
-var pry = require('pryjs');
 
 router.get("/recipes", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
