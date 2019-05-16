@@ -13,7 +13,6 @@ router.get("/", function(req, res, next) {
       res.status(200).send(JSON.stringify(users));
     })
     .catch(error => {
-      eval(pry.it)
       res.setHeader("Content-Type", "application/json");
       res.status(500).send({error})
     });

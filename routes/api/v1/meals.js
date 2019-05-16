@@ -7,7 +7,6 @@ var MealFood = require('../../../models').MealFood;
 var MealRecipe = require('../../../models').MealRecipe;
 var User = require('../../../models').User;
 const fetch = require('node-fetch');
-var pry = require('pryjs');
 
 router.get("/:id", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -83,7 +82,6 @@ router.get("/", async function(req, res, next) {
     }
   })
   .catch(error => {
-    eval(pry.it)
     res.status(500).send({error: "test 3"})
   })
 })
@@ -135,7 +133,6 @@ router.post("/", async function(req, res, next) {
     }
   })
   .catch(error => {
-    eval(pry.it)
     res.status(404).send(JSON.stringify({ error: error }))
   })
 });
