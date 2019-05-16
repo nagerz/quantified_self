@@ -21,7 +21,7 @@ describe('Meal create API', () => {
         expect(response.status).toBe(201)
         expect(response.body.id).toBe(8),
         expect(response.body.name).toBe('New meal'),
-        expect(response.body.date).toBe("2019-05-10T06:00:00.000Z")
+        expect(response.body.date).toBe("2019-05-10T00:00:00.000Z")
         expect(response.body.UserId).toBe(1)
       });
     });
