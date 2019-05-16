@@ -26,7 +26,7 @@ router.get("/:id", async function(req, res, next) {
   })
   .then(recipe => {
     if(!recipe){
-      res.status(404).send({ error: "Requested recipe item could not be found." });
+      res.status(404).send({ error: "Requested recipe could not be found." });
     }else{
       res.status(200).send(JSON.stringify(recipe));
     }

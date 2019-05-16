@@ -111,11 +111,11 @@ router.post("/", async function(req, res, next) {
       })
     })
     .catch(error => {
-      res.status(400).send({ error: "User validation error." });
+      res.status(400).send({ error: error });
     })
   })
   .catch(error => {
-    res.status(404).send(JSON.stringify({ error: error }))
+    res.status(400).send(JSON.stringify({ error: error }))
   })
 });
 
@@ -176,7 +176,7 @@ router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
     })
   })
   .catch(error => {
-    res.status(404).send(JSON.stringify({ error: error }))
+    res.status(400).send(JSON.stringify({ error: error }))
   })
 });
 
@@ -239,7 +239,7 @@ router.post("/:meal_id/recipes", async function(req, res, next) {
       })
     })
     .catch(error => {
-      res.status(404).send(JSON.stringify({ error: error }))
+      res.status(400).send(JSON.stringify({ error: error }))
     })
   })
   .catch(error => {
