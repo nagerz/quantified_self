@@ -12,7 +12,7 @@ describe('Session create API', () => {
 
       test('it can create a user successfully', () => {
         const body = {
-          email: "new email",
+          email: "newemail@email.com",
           password: "password",
           password_confirmation: "password"
         }
@@ -26,7 +26,7 @@ describe('Session create API', () => {
 
       test('it can create a session successfully', () => {
         const body = {
-          email: "new email",
+          email: "newemail@email.com",
           password: "password"
         }
 
