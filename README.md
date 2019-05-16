@@ -205,6 +205,7 @@ body:
 * hat
 * nyc
 * bcrypt
+* Circle CI
 
 
 ## How to Contribute
