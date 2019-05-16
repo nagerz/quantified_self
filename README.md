@@ -30,9 +30,9 @@ To run the test suite, execute the following command: `npm test`. The tests will
 ## Test Coverage
 To run a test coverage report execute the command: `npx jest --coverage`.
 
-<!-- The report will look like the following.
+The report will look like the following.
 
-![Alt text](./public/images/test_coverage.png?raw=true "Test Coverage Report") -->
+![Alt text](./public/images/test_coverage.png?raw=true "Test Coverage Report")
 
 Navigate to the project directory of `coverage/lcov-report/quantified_self/`. Copy the file path and execute the command: `open insert_file_path`. This will open the specific coverage report in the default browser.
 
@@ -226,7 +226,7 @@ body:
 
 "Please pass the calories datatype as a Number"
 ```
- 
+
 ###### Food Deletion
 A food item can be deleted from the database via a `DELETE` request to `/api/v1/foods/:id`, utilizing the `id` of an existing food item in the database. A successful response will return a `204` status code.
 
@@ -236,7 +236,7 @@ A unsuccessful response due to an `id` not found in the database will return:
  body:
  {"error": "The requested food item could not be found and was therefore not deleted."}
  ```
- 
+
 #### Meal Endpoints
 ###### Meal Show
 
@@ -491,9 +491,9 @@ A unsuccessful response due to an `id` not found in the database will return:
  body:
  {"error": "The requested recipe could not be found and was therefore not deleted."}
  ```
- 
+
  ###### Recipe Search
-A list of recipes can be retrieved (utilizing a recipe search microservice) for use in meal recipe creation via a `GET` request to `/api/v1/search/recipes?mealType=MEALTYPE&query=QUERY`. Query parameter values of `mealType` and `query` must be provided as follows: 
+A list of recipes can be retrieved (utilizing a recipe search microservice) for use in meal recipe creation via a `GET` request to `/api/v1/search/recipes?mealType=MEALTYPE&query=QUERY`. Query parameter values of `mealType` and `query` must be provided as follows:
 
 ```
 MEALTYPE = "boring" (regular recipes), "bang-for-your-buck" (recipes optimaized for shortest cook time and maximum claories, or "heart-attack" (maximum calories, minimum health factor).
@@ -559,9 +559,9 @@ A unsuccessful response will return a `404` error and a message:
 ###### * [**_Project Specifications_**](http://backend.turing.io/module4/projects/quantified_self/qs_server_side)
 ###### * [**_Project Rubric_**](http://backend.turing.io/module4/projects/quantified_self/rubric)
 
-### Author
-[Mackenzie Frey](https://github.com/Mackenzie-Frey)
-[Zach Nager](https://github.com/nagerz)
+### Authors
+* [Mackenzie Frey](https://github.com/Mackenzie-Frey)
+* [Zach Nager](https://github.com/nagerz)
 
 ### Special Recognition
 * [Dione Wilson](https://github.com/dionew1)
