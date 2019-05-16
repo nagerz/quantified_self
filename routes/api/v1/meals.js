@@ -34,9 +34,7 @@ router.get("/:id", async function(req, res, next) {
   })
   .then(meal => {
     if (!meal) {
-      res.status(404).send({
-        error: "Requested meal could not be found."
-      });
+      res.status(404).send({ error: "Requested meal could not be found." });
     } else {
       meal = meal.toJSON();
       Meal.totalCalories(meal)
@@ -47,9 +45,7 @@ router.get("/:id", async function(req, res, next) {
     }
   })
   .catch(error => {
-    res.status(404).send({
-      error
-    })
+    res.status(404).send({error: error})
   });
 });
 
@@ -90,47 +86,33 @@ router.post("/", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
   validateMealRequest(req)
   .then(req => {
-    if (req.body.api_key){
-      User.findOne({
+    validateAndFindUser(req)
+    .then(user => {
+      var date = new Date(req.body.date)
+      Meal.findOrCreate({
         where: {
-          api_key: req.body.api_key
-        }
+          UserId: user.id,
+          name: req.body.name
+        },
+        defaults: {
+          date: date
+        },
+        attributes: ['id', 'name', 'date', 'UserId']
       })
-      .then(user => {
-        if(!user){
-          res.setHeader("Content-Type", "application/json");
-          res.status(401).send({ error: "unauthorized" });
+      .spread((meal, created) => {
+        if (created) {
+          res.status(201).send(JSON.stringify(parsedMeal(meal)))
         }else{
-          var date = new Date(req.body.date)
-          Meal.findOrCreate({
-            where: {
-              UserId: user.id,
-              name: req.body.name
-            },
-            defaults: {
-              date: date
-            },
-            attributes: ['id', 'name', 'date', 'UserId']
-          })
-          .spread((meal, created) => {
-            if (created) {
-              res.status(201).send(JSON.stringify(meal))
-            }else{
-              res.status(400).send({error:"That meal already exists for that user."})
-            }
-          })
-          .catch(error => {
-            res.status(400).send({ error: error });
-          })
+          res.status(400).send({error:"That meal already exists for that user."})
         }
       })
       .catch(error => {
-        res.status(404).send(JSON.stringify({ error: "User find error" }))
+        res.status(400).send({ error: "Meal creation error." });
       })
-    }else{
-      res.setHeader("Content-Type", "application/json");
-      res.status(401).send({ error: "unauthorized" });
-    }
+    })
+    .catch(error => {
+      res.status(400).send({ error: "User validation error." });
+    })
   })
   .catch(error => {
     res.status(404).send(JSON.stringify({ error: error }))
@@ -139,64 +121,11 @@ router.post("/", async function(req, res, next) {
 
 router.post("/:meal_id/foods/:food_id", async function(req, res, next) {
   res.setHeader("content-Type", "application/json");
-  Meal.findOne({
-    where: {
-      id: req.params.meal_id
-    },
-    attributes: ['id', 'name']
-  })
-  .then(meal => {
-    if (!meal) {
-      res.status(404).send({
-        error: 'No meal with that ID.'
-      })
-    } else {
-      Food.findOne({
-        where: {
-          id: req.params.food_id
-        },
-        attributes: ['id', 'name']
-      })
-      .then(food => {
-        if (!food) {
-          res.status(404).send({
-            error: 'No food with that ID.'
-          })
-        }else{
-          MealFood.findOrCreate({
-            where: {
-              MealId: meal.id,
-              FoodId: food.id
-            }
-          })
-          .spread((mealfood, created) => {
-            if (created) {
-              res.status(201).send(JSON.stringify({"message": `Successfully added ${food.name} to ${meal.name}`}))
-            }else{
-              res.status(400).send({error:"That food already exists for that meal."})
-            }
-          })
-          .catch(error => {
-            res.status(400).send({ error: error });
-          })
-        }
-      })
-      .catch(error => {
-        res.status(400).send({ error: "Invalid request." });
-      })
-    }
-  })
-  .catch(error => {
-    res.status(400).send({ error: "Invalid request." });
-  })
-});
-
-router.post("/:meal_id/recipes", async function(req, res, next) {
-  res.setHeader("content-Type", "application/json");
-  validateRecipeRequest(req)
-  .then(req => {
+  validateAndFindUser(req)
+  .then(user => {
     Meal.findOne({
       where: {
+        UserId: user.id,
         id: req.params.meal_id
       },
       attributes: ['id', 'name']
@@ -207,29 +136,29 @@ router.post("/:meal_id/recipes", async function(req, res, next) {
           error: 'No meal with that ID.'
         })
       } else {
-        Recipe.findOrCreate({
-          where: {name: req.body.recipe.name},
-          defaults: {
-            calories: req.body.recipe.calories,
-            url: req.body.recipe.url
+        Food.findOne({
+          where: {
+            id: req.params.food_id
           },
           attributes: ['id', 'name']
         })
-        .then(recipe => {
-          if(!recipe) {
-            res.status(404).send({error: 'Invalid recipe information.'})
+        .then(food => {
+          if (!food) {
+            res.status(404).send({
+              error: 'No food with that ID.'
+            })
           }else{
-            MealRecipe.findOrCreate({
+            MealFood.findOrCreate({
               where: {
                 MealId: meal.id,
-                RecipeId: recipe[0].id
+                FoodId: food.id
               }
             })
-            .spread((mealrecipe, created) => {
+            .spread((mealfood, created) => {
               if (created) {
-                res.status(201).send(JSON.stringify({"message": `Successfully added ${recipe[0].name} to ${meal.name}`}))
+                res.status(201).send(JSON.stringify({"message": `Successfully added ${food.name} to ${meal.name}`}))
               }else{
-                res.status(400).send({error:"That recipe already exists for that meal."})
+                res.status(400).send({error:"That food already exists for that meal."})
               }
             })
             .catch(error => {
@@ -243,21 +172,88 @@ router.post("/:meal_id/recipes", async function(req, res, next) {
       }
     })
     .catch(error => {
-      res.status(400).send({ error: "Invalid meal request." });
+      res.status(400).send({ error: "Invalid meal request. No meal for that user." });
     })
   })
   .catch(error => {
     res.status(404).send(JSON.stringify({ error: error }))
+  })
+});
+
+router.post("/:meal_id/recipes", async function(req, res, next) {
+  res.setHeader("content-Type", "application/json");
+  validateRecipeRequest(req)
+  .then(req => {
+    validateAndFindUser(req)
+    .then(user => {
+      Meal.findOne({
+        where: {
+          UserId: user.id,
+          id: req.params.meal_id
+        },
+        attributes: ['id', 'name']
+      })
+      .then(meal => {
+        if (!meal) {
+          res.status(404).send({
+            error: 'No meal with that ID.'
+          })
+        } else {
+          Recipe.findOrCreate({
+            where: {name: req.body.recipe.name},
+            defaults: {
+              calories: req.body.recipe.calories,
+              url: req.body.recipe.url
+            },
+            attributes: ['id', 'name']
+          })
+          .then(recipe => {
+            if(!recipe) {
+              res.status(404).send({error: 'Invalid recipe information.'})
+            }else{
+              MealRecipe.findOrCreate({
+                where: {
+                  MealId: meal.id,
+                  RecipeId: recipe[0].id
+                }
+              })
+              .spread((mealrecipe, created) => {
+                if (created) {
+                  res.status(201).send(JSON.stringify({"message": `Successfully added ${recipe[0].name} to ${meal.name}`}))
+                }else{
+                  res.status(400).send({error:"That recipe already exists for that meal."})
+                }
+              })
+              .catch(error => {
+                res.status(400).send({ error: error });
+              })
+            }
+          })
+          .catch(error => {
+            res.status(400).send({ error: "Invalid request." });
+          })
+        }
+      })
+      .catch(error => {
+        res.status(400).send({ error: "Invalid meal request." });
+      })
+    })
+    .catch(error => {
+      res.status(404).send(JSON.stringify({ error: error }))
+    })
+  })
+  .catch(error => {
+    res.status(404).send({error: error})
   })
 })
 
 router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   MealFood.destroy({
-      where: {
-        MealId: req.params.meal_id,
-        FoodId: req.params.food_id
-      }
+    where: {
+      MealId: req.params.meal_id,
+      FoodId: req.params.food_id
+    }
   })
   .then(mealfood => {
     if(mealfood) {
@@ -274,10 +270,10 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
 router.delete('/:meal_id/recipes/:recipe_id', function(req, res, next) {
   res.setHeader("Content-Type", "application/json");
   MealRecipe.destroy({
-      where: {
-        MealId: req.params.meal_id,
-        RecipeId: req.params.recipe_id
-      }
+    where: {
+      MealId: req.params.meal_id,
+      RecipeId: req.params.recipe_id
+    }
   })
   .then(mealrecipe => {
     if(mealrecipe) {
@@ -304,6 +300,30 @@ function validateMealRequest(req) {
     }else{
       error = "Missing name and/or date."
       reject(error)
+    }
+  })
+};
+
+function validateAndFindUser(req){
+  return new Promise((resolve, reject) => {
+    if (req.body.api_key){
+      User.findOne({
+        where: {
+          api_key: req.body.api_key
+        }
+      })
+      .then(user => {
+        if(!user){
+          reject("unauthorized");
+        }else{
+          resolve(user)
+        }
+      })
+      .catch(error => {
+        reject("User find error")
+      })
+    }else{
+      reject("unauthorized");
     }
   })
 };
@@ -339,5 +359,13 @@ function addTotalCalories(meals) {
   })
 };
 
+function parsedMeal(meal) {
+  return {
+    "id": meal.id,
+    "name": meal.name,
+    "date": meal.date,
+    "UserId": meal.UserId
+  }
+};
 
 module.exports = router;
