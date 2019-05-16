@@ -4,7 +4,6 @@ var Food = require('../../../models').Food;
 var Meal = require('../../../models').Meal;
 var MealFood = require('../../../models').MealFood;
 const fetch = require('node-fetch');
-//var pry = require('pryjs');
 
 router.get("/:id/foods", async function(req, res, next) {
   res.setHeader("Content-Type", "application/json");

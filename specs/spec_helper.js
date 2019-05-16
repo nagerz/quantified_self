@@ -11,6 +11,10 @@ const tearDown = () => {
   shell.exec('npx sequelize db:migrate:undo:all')
 }
 
+const drop = () => {
+  shell.exec('npx sequelize db:drop')
+}
+
 module.exports = {
-  testSetup, tearDown
+  testSetup, tearDown, drop
 }
