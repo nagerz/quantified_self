@@ -38,7 +38,7 @@ router.get("/:id", async function(req, res, next) {
       res.status(404).send({ error: "Requested meal could not be found." });
     } else {
       meal = meal.toJSON();
-      Meal.totalCalories(meal)
+      meal.totalCalories()
       .then(totalCal => {
         meal.totalCalories = totalCal
         res.status(200).send(JSON.stringify(meal));
@@ -112,7 +112,7 @@ router.post("/", async function(req, res, next) {
       })
     })
     .catch(error => {
-      res.status(400).send({ error: "User validation error." });
+      res.status(400).send({ error: error });
     })
   })
   .catch(error => {
@@ -350,7 +350,7 @@ function addTotalCalories(meals) {
     var calMeals = []
     meals.map(meal => {
       meal = meal.toJSON();
-      Meal.totalCalories(meal)
+      meal.totalCalories()
       .then(totalCal => {
         meal.totalCalories = totalCal
         calMeals.push(meal)

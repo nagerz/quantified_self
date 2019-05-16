@@ -32,49 +32,49 @@ module.exports = {
         resolve(queryInterface.bulkInsert('Meals', [
           {
             name: 'Monday Breakfast',
-            date: new Date(new Date().setDate(new Date().getDate()-6)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-6)).toLocaleDateString()),
             UserId: 1,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Monday Lunch',
-            date: new Date(new Date().setDate(new Date().getDate()-6)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-6)).toLocaleDateString()),
             UserId: 1,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Monday Dinner',
-            date: new Date(new Date().setDate(new Date().getDate()-6)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-6)).toLocaleDateString()),
             UserId: 1,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Wednesday Desert',
-            date: new Date(new Date().setDate(new Date().getDate()-4)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-4)).toLocaleDateString()),
             UserId: 1,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Thursday Snack',
-            date: new Date(new Date().setDate(new Date().getDate()-3)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-3)).toLocaleDateString()),
             UserId: 1,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Saturday breakfast',
-            date: new Date(new Date().setDate(new Date().getDate()-1)),
+            date: new Date(new Date(new Date().setDate(new Date().getDate()-1)).toLocaleDateString()),
             UserId: 2,
             createdAt: new Date(),
             updatedAt: new Date()
           },
           {
             name: 'Sunday Brunch',
-            date: new Date(),
+            date: new Date(new Date().toLocaleDateString()),
             UserId: 2,
             createdAt: new Date(),
             updatedAt: new Date()

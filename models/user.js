@@ -1,3 +1,5 @@
+var pry = require('pryjs');
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -7,8 +9,26 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Meal)
-    //User.hasMany(models.UserMeal)
-    //User.belongsToMany(models.Meal, { through: models.UserMeal, foreignKey: 'MealId'});
   };
+
+  User.prototype.dailyCalories = function(date) {
+    return new Promise((resolve, reject) => {
+      var queryDate = new Date(date.toLocaleDateString())
+      this.getMeals({
+        where: {date: queryDate},
+      })
+      .then(meals => {
+        var calories = 0
+        meals.forEach(meal => {
+          meal.totalCalories()
+          .then(mealCals => {
+            calories += mealCals
+          })
+        })
+        //Breaks here. Can't get the calories
+        resolve(calories)
+      })
+    })
+  }
   return User;
 };

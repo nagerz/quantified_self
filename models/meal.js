@@ -16,16 +16,24 @@ module.exports = (sequelize, DataTypes) => {
     Meal.belongsTo(models.User)
   };
 
-  Meal.totalCalories = function(meal) {
+  Meal.prototype.totalCalories = function() {
     return new Promise((resolve, reject) => {
       var total = 0
-      meal.Food.forEach(food => {
-        total += food.calories
+      this.getFood()
+      .then(foods => {
+        foods.forEach(food => {
+          total += food.calories
+        })
       })
-      meal.Recipes.forEach(recipe => {
-        total += recipe.calories
+      .then(() => {
+        this.getRecipes()
+        .then(recipes => {
+          recipes.forEach(recipe => {
+            total += recipe.calories
+          })
+          resolve(total);
+        })
       })
-      resolve(total);
     })
   };
 
