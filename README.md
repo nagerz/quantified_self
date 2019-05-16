@@ -315,7 +315,7 @@ If the request is unsuccessful due to no meals being stored in the database, the
 A new meal item can be created and saved in the database by a logged in user via a `POST` request to the `/api/v1/meals` endpoint. The request must contain a users API key, a meal name (unique in the system) and a date matching the format provided below.
 
 ``` HTTP
-POST /api/v1/foods
+POST /api/v1/meals
 Content-Type: application/json
 Accept: application/json
 
@@ -354,7 +354,7 @@ body:
 A logged in user can add a food item to a previously created meal via a `POST` request to the `/api/v1/meals/:meal_id/foods/:food_id` endpoint. The request must contain a users API key, an existing meal id of a meal belonging to the user, and a food id of a food item existing in the database. A successful request should match the format provided below.
 
 ``` HTTP
-POST /api/v1/foods
+POST /api/v1/meals/:meal_id/foods
 Content-Type: application/json
 Accept: application/json
 
