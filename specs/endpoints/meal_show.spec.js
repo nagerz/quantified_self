@@ -19,7 +19,7 @@ describe('Meal show API', () => {
     test('it should return a meal object', () => {
       return request(app).get("/api/v1/meals/1").then(response => {
         expect(response.body.id).toBe(1),
-        expect(response.body.name).toBe('Breakfast'),
+        expect(response.body.name).toBe('Monday Breakfast'),
         expect(response.body.Food[0].name).toBe("cheetos")
         expect(response.body.Recipes[0].name).toBe("Fancy Chicken Recipe")
         expect(response.body.totalCalories).toBe(2105)

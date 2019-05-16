@@ -13,6 +13,10 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING
       },
+      date: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
