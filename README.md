@@ -66,7 +66,7 @@ body:
 ```
 ###### Food Show
 
-An individual food item currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
+An individual food item currently saved in the database can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
 
 If the request is successful, the application will return the requested food object, along with a status code of 200.
 
@@ -145,6 +145,9 @@ A food item can be deleted from the database via a `DELETE` request to `/api/v1/
  body:
  {"error": "The requested food item could not be found and was therefore not deleted."}
  ```
+
+###### Food Update
+
 
 ###### Meal Index
 All meal items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/meals` endpoint.
