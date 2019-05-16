@@ -36,10 +36,6 @@ module.exports = (sequelize, DataTypes) => {
           resolve(null)
         }
       })
-      .catch(error => {
-        //unknown find food error
-        reject(error)
-      })
     })
   }
 
