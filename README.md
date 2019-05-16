@@ -3,39 +3,38 @@
 ## Description
 Quantified Self is a 10-day, paired project during module four of four, of Turing School's Back-End Engineering Program.
 
-Quantified Self is a web application designed to consume/produce API's. The application utilizes Node.js, Expess and Sequelize, with a PostgreSQL database, to consume the  --------->>>>>>>>>> Add here.
+Quantified Self is a web application designed aggregate favorite recipes, associate those recipes with specific meals, count the calories for those meals. The application utilizes [Recipe Service](https://github.com/Mackenzie-Frey/recipe_service) as a microservice for retrieving recipes based on specific filters and search queries.Quantified Self utilizes Node.js, Expess and Sequelize, PostgreSQL and Jest.
 
 #### [**_View Quantified Self in Production_**](https://self-quantified.herokuapp.com/) </br>
 
 ### Schema
-<!-- ![Alt text](./public/images/schema.png?raw=true "Database Schema") -->
+![Alt text](./public/images/schema.png?raw=true "Database Schema")
 
 ## Getting Started
 
 To run Quantified Self on a local machine, navigate to the directory in which you would like the project to be located in, then execute the following commands:
 
 ```
-$ git clone git@github.com:nagerz/quantified_self.git
-$ cd quantified_self
-$ npm install # Install dependencies
-$ npx sequelize db:create # Create PostgreSQL Database
-$ npx sequelize db:migrate # Run migrations for database setup
-$ npx sequelize db:seed:all # Run seed file for seeding database
-```
-
-#### Environment Variable Setup:
-
- Sign Up for the following APIs:
-* [Site](link) <<<<<<<-------- Add things here
-
-Create a `.env` file in the root directory of the project. Add `.env` to the `.gitignore` file. Make sure to insert the secret key without the alligator clips ( < > ).
-```
----------->>>>>>>>>>Add environment variables here.
+$ git clone git@github.com:Mackenzie-Frey/recipe_service.git
+$ cd recipe_service
+$ npm install # Installs dependencies
+$ npx sequelize db:create # Creates PostgreSQL Database
+$ npx sequelize db:migrate # Runs migrations for the database setup
+$ npx sequelize db:seed:all # Runs seed file for seeding the database
 ```
 
 ## Running Tests
 
 To run the test suite, execute the following command: `npm test`. The tests will automatically run each time an update is made to the application.
+
+## Test Coverage
+To run a test coverage report execute the command: `npx jest --coverage`.
+
+<!-- The report will look like the following.
+
+![Alt text](./public/images/test_coverage.png?raw=true "Test Coverage Report") -->
+
+Navigate to the project directory of `coverage/lcov-report/quantified_self/`. Copy the file path and execute the command: `open insert_file_path`. This will open the specific coverage report in the default browser.
 
 ## Deployment
 
@@ -67,7 +66,7 @@ body:
 ```
 ###### Food Show
 
-An individual food item currently saved in the databse can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
+An individual food item currently saved in the database can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
 
 If the request is successful, the application will return the requested food object, along with a status code of 200.
 
@@ -147,6 +146,9 @@ A food item can be deleted from the database via a `DELETE` request to `/api/v1/
  {"error": "The requested food item could not be found and was therefore not deleted."}
  ```
 
+###### Food Update
+
+
 ###### Meal Index
 All meal items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/meals` endpoint.
 
@@ -192,7 +194,6 @@ body:
 }
 ```
 
-
 ## Tools
 * Postman
 * dotenv
@@ -204,10 +205,11 @@ body:
 * shelljs
 * supertest
 * beautify
------->>>>>>>> add more tools (APIs used)
+* hat
+* nyc
+* bcrypt
+* Circle CI
 
-## Known Issues
------------->>>>>>>>>>> Add here
 
 ## How to Contribute
 
@@ -234,3 +236,70 @@ body:
 ### Special Recognition
 * [Dione Wilson](https://github.com/dionew1)
 * [Cory Westerfield](https://github.com/corywest)
+
+
+
+<!-- Keep the below comment block in case the schema diagram need to be altered.
+This can be done by visiting https://dbdiagram.io/d, creating a new diagram/ deleting
+the diagram in the left hand bar and pasting in the below.
+
+Table Food {
+  id int [pk]
+  name string
+  calories int
+  created_at date
+  updated_at date
+}
+
+Table Meals {
+  id int [pk]
+  name string
+  date date
+  UserId int
+  created_at date
+  updated_at date
+}
+
+Table MealFoods {
+  id int [pk]
+  MealId int
+  FoodId int
+  created_at date
+  updated_at date
+}
+
+Table Users {
+  id int [pk]
+  email string
+  password_digest string
+  api_key string
+  created_at date
+  updated_at date
+}
+
+Table Recipe {
+  id int [pk]
+  name string
+  calories int
+  url string
+  created_at date
+  updated_at date
+}
+
+Table MealRecipe {
+  id int [pk]
+  MealId int
+  RecipeId int
+  created_at date
+  updated_at date
+}
+
+Ref: "Meals"."id" < "MealRecipe"."MealId"
+
+Ref: "MealRecipe"."RecipeId" < "Recipe"."id"
+
+Ref: "Food"."id" < "MealFoods"."FoodId"
+
+Ref: "MealFoods"."MealId" < "Meals"."id"
+
+Ref: "Meals"."UserId" < "Users"."id" -->
