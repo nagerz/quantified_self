@@ -45,9 +45,9 @@ To view Quantified Self in development, execute the following command from the p
 The application provides the following endpoints:
 
 #### User Endpoints
-###### User Registration
+##### User Registration
 
-A user can be created and saved in the databse in order to track meals and calorie intake. A user is created via a `POST` request to the `/api/v1/users` endpoint. A unique email, password, and matching password_confirmation must be provided, formatted as follows:
+A user can be created and saved in the database in order to track meals and calorie intake. A user is created via a `POST` request to the `/api/v1/users` endpoint. A unique email, password, and matching password_confirmation must be provided, formatted as follows:
 
 ```
 {
@@ -68,7 +68,7 @@ body:
 }
 ```
 
-###### User Session
+##### User Session
 
 A user can be 'logged in' or a 'session' created to retrieve a users api_key. A session is created via a `POST` request to the `/api/v1/sessions` endpoint. A correctly matching user email and password must be provided, formatted as follows:
 
@@ -90,7 +90,7 @@ body:
 }
 ```
 #### Food Endpoints
-###### Food Index
+##### Food Index
 
 All food items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/foods` endpoint.
 
@@ -109,7 +109,7 @@ body:
   {...}
 ]
 ```
-###### Food Show
+##### Food Show
 
 An individual food item currently saved in the database can be retrieved via a `GET` request to the `/api/v1/foods/:id` endpoint.
 
@@ -137,7 +137,7 @@ body:
 }
 ```
 
-###### Food Creation
+##### Food Creation
 
 A new food item can be created and saved in the database via a `POST` request to the `/api/v1/foods` endpoint. The request must contain a food name (unique in the system) and the number of calories associated with the food matching the format provided below.
 
@@ -182,7 +182,7 @@ body:
 
 "Please pass the calories datatype as a Number"
 ```
-###### Food Update
+##### Food Update
 A food item can be updated in the database via a `PATCH` request to the `/api/v1/foods/:id` endpoint using the `id` of an existing food item in the database. The request must contain a food name (unique in the system) and the number of calories associated with the food matching the format provided below.
 
 ``` HTTP
@@ -227,8 +227,8 @@ body:
 "Please pass the calories datatype as a Number"
 ```
 
-###### Food Deletion
-A food item can be deleted from the database via a `DELETE` request to `/api/v1/foods/:id`, utilizing the `id` of an existing food item in the database. A successful response will return a `204` status code.
+##### Food Deletion
+A food item can be deleted from the database via a `DELETE` request to `/api/v1/foods/:id`, utilizing the `id` of an existing food item from the database. A successful response will return a `204` status code.
 
 A unsuccessful response due to an `id` not found in the database will return:
  ``` HTTP
@@ -238,7 +238,7 @@ A unsuccessful response due to an `id` not found in the database will return:
  ```
 
 #### Meal Endpoints
-###### Meal Show
+##### Meal Show
 
 An individual meal currently saved in the database can be retrieved via a `GET` request to the `/api/v1/meals/:id` endpoint.
 
@@ -269,7 +269,7 @@ body:
 }
 ```
 
-###### Meal Index
+##### Meal Index
 All meal items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/meals` endpoint.
 
 If the request is successful, the application will return an array containing meals objects, along with a status code of 200.
@@ -304,7 +304,7 @@ body:
 ```
 If the request is unsuccessful due to no meals being stored in the database, the application will return an error message of `{error: 'There are no meals in the database.}`, along with a status code of 404.
 
-###### Meal Creation
+##### Meal Creation
 
 A new meal item can be created and saved in the database by a logged in user via a `POST` request to the `/api/v1/meals` endpoint. The request must contain a users API key, a meal name (unique in the system) and a date matching the format provided below.
 
@@ -343,9 +343,9 @@ body:
 "That meal already exists for that user."
 ```
 
-###### Adding a Food to a Meal
+##### Adding a Food to a Meal
 
-A logged in user can add a food item to an previously created meal by a `POST` request to the `/api/v1/meals/:meal_id/foods/:food_id` endpoint. The request must contain a users API key, an existing meal id of a meal belonging to the user, and a food id of a food item existing in the databse. A successful request should match the format provided below.
+A logged in user can add a food item to a previously created meal via a `POST` request to the `/api/v1/meals/:meal_id/foods/:food_id` endpoint. The request must contain a users API key, an existing meal id of a meal belonging to the user, and a food id of a food item existing in the database. A successful request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/foods
@@ -375,9 +375,9 @@ body:
 "No meal with that ID."
 ```
 
-###### Adding a Recipe to a Meal
+##### Adding a Recipe to a Meal
 
-A logged in user can add a recipe item to an previously created meal by a `POST` request to the `/api/v1/meals/:meal_id/recipes` endpoint. The request must contain a users API key, an existing meal id of a meal belonging to the user, and the name, calories, and url of a recipe. Recipe information can be retireved via a seperate endpoint. A successful request should match the format provided below.
+A logged in user can add a recipe item to a previously created meal via a `POST` request to the `/api/v1/meals/:meal_id/recipes` endpoint. The request must contain a users API key, an existing meal id of a meal belonging to the user, and the name, calories, and url of a recipe. Recipe information can be retrieved via a separate endpoint. A successful request should match the format provided below.
 
 ``` HTTP
 POST /api/v1/foods
@@ -412,7 +412,7 @@ body:
 "Missing/incorrectly formatted recipe information."
 ```
 
-###### Meal Food Deletion
+##### Meal Food Deletion
 To delete a food item on a meal, a successful `DELETE` request to the endpoint `/api/v1/meals/:meal_id/foods/:food_id` will delete the applicable MealFood record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
@@ -422,7 +422,7 @@ body:
 }
 ```
 
-###### Meal Recipe Deletion
+##### Meal Recipe Deletion
 To delete a recipe item on a meal, a successful `DELETE` request to the endpoint `/api/v1/meals/:meal_id/recipes/:recipe_id` will delete the applicable MealRecipe record in the database and return a status code of `204`. An unsuccessful request will return the following:
 ``` HTTP
 status: 404
@@ -432,7 +432,7 @@ body:
 }
 ```
 #### Recipe Endpoints
-###### Recipe Index
+##### Recipe Index
 
 All recipe items currently saved in the database can be retrieved via a `GET` request to the `/api/v1/recipes` endpoint.
 
@@ -453,7 +453,7 @@ body:
 ]
 ```
 
-###### Recipe Show
+##### Recipe Show
 
 An individual recipe item currently saved in the database can be retrieved via a `GET` request to the `/api/v1/recipes/:id` endpoint.
 
@@ -482,7 +482,7 @@ body:
 }
 ```
 
-###### Recipe Deletion
+##### Recipe Deletion
 A recipe can be deleted from the database via a `DELETE` request to `/api/v1/recipes/:id`, utilizing the `id` of an existing recipe in the database. A successful response will return a `204` status code.
 
 A unsuccessful response due to an `id` not found in the database will return:
@@ -492,8 +492,8 @@ A unsuccessful response due to an `id` not found in the database will return:
  {"error": "The requested recipe could not be found and was therefore not deleted."}
  ```
 
- ###### Recipe Search
-A list of recipes can be retrieved (utilizing a recipe search microservice) for use in meal recipe creation via a `GET` request to `/api/v1/search/recipes?mealType=MEALTYPE&query=QUERY`. Query parameter values of `mealType` and `query` must be provided as follows:
+##### Recipe Search
+A list of recipes can be retrieved (utilizing a [recipe search microservice](https://github.com/Mackenzie-Frey/recipe_service)) for use in meal recipe creation via a `GET` request to `/api/v1/search/recipes?mealType=MEALTYPE&query=QUERY`. Query parameter values of `mealType` and `query` must be provided as follows:
 
 ```
 MEALTYPE = "boring" (regular recipes), "bang-for-your-buck" (recipes optimaized for shortest cook time and maximum claories, or "heart-attack" (maximum calories, minimum health factor).
@@ -543,14 +543,14 @@ A unsuccessful response will return a `404` error and a message:
 
 ## How to Contribute
 
-###### Contributing Code:
+##### Contributing Code:
 1. Fork the project.
 2. Write a failing test.
 3. Commit that failing tests.
 4. Commit changes that fix the tests.
 4. Submit a pull request detailing the change that was made.
 
-###### Submitting a Bug:
+##### Submitting a Bug:
 1. Search the existing [issues](https://github.com/nagerz/quantified_self/issues).
 2. Create a new issue if applicable, or contribute to an existing issue.
 
